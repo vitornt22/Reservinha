@@ -6,4 +6,8 @@ As funcionalidade descritas acima não estão implementadas pois há necessidade
 
 Caso queira ver o programa rodando abra o arquivo Inicio.py pois ele tem todas telas conectadas de maneira correta por meio do QtStack e caso deseje enviar dados para o servidor abra o arquivo servidor.py. 
 
+Formatos de inserção correta nos campos de cadastro
+campo cpf: 123.123.123-12
+campo telefone: 89988047108
+campo email: exemplo@gmail.com
 
