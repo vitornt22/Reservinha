@@ -36,7 +36,7 @@ class ClientThread(threading.Thread):
             
         if lista[0]=='m':
             #print("EH monitor!!!")
-            sql = """CREATE TABLE IF NOT EXISTS Monitores(nome varchar(20), matricula int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20));"""
+            sql = """CREATE TABLE IF NOT EXISTS Monitores(nome varchar(20), matricula int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20),primary key(matricula));"""
 
             cursor.execute(sql)
        
@@ -53,7 +53,7 @@ class ClientThread(threading.Thread):
 
         if lista[0]=='c':
             
-            sql = """CREATE TABLE IF NOT EXISTS Coodenadores(nome varchar(20), siape int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20));"""
+            sql = """CREATE TABLE IF NOT EXISTS Coodenadores(nome varchar(20), siape int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20),primary key(siape));"""
 
             cursor.execute(sql)
        
