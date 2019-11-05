@@ -199,7 +199,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         if( self.tela_inicio.verifica == 3):
             if( "@" in self.tela_login.CampoEmail.text()):
                 dados = "l"+","+"c"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
-                print("lixo",dados)
+                
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
                     self.QtStack.setCurrentIndex(2)
@@ -212,7 +212,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         if(self.tela_inicio.verifica == 2):
              if( "@" in self.tela_login.CampoEmail.text()):
                 dados = "l"+","+"p"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
-                print("lixo",dados)
+                
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
                     self.QtStack.setCurrentIndex(3)
@@ -240,7 +240,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         if(self.tela_inicio.verifica == 4):
             if( "@" in self.tela_login.CampoEmail.text()):
                 dados = "l"+","+"t"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
-                print("lixo",dados)
+                
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
                     self.QtStack.setCurrentIndex(5)
