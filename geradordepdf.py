@@ -6,7 +6,7 @@ class GeraPDF(object):
         pdf = canvas.Canvas(nome_arquivo+".PDF")
         img = 'Ufpi_brasão.jpg'
         pdf.setFont("Helvetica",20)
-        pdf.drawString(150, 800, "UNIVERSIDADE FEDERAL DO PIAUÍ")
+        pdf.drawString(150, 800, "UNIVERSIDADE FEDERAL DO PÍAUI")
         pdf.setFont("Helvetica",12)
         pdf.drawImage(img,200,550,width=200,height=200)
         pdf.drawString(0, 500, "O Seguinte pessoa está habilitada a utilizar a sala 809:")

@@ -2,7 +2,7 @@ import socket,threading
 from professor import professor
 from monitor import monitor
 from coordenador import coordenador
-import mysql.connector as mysql
+import sqlite3
 class ClientThread(threading.Thread):
     
     def __init__(self,clientAddress,clientsocket):
@@ -11,7 +11,7 @@ class ClientThread(threading.Thread):
        
 
     def run(self):
-        conexao = mysql.connect(host = 'localhost',db='bd', user='root', passwd=None)
+        conexao = sqlite3.connect('bd0.db')
         recebe = self.csocket.recv(1024) #define que os pacotes recebidos sao de ate 1024 bytes
         string = ''
         cursor = conexao.cursor()
@@ -21,11 +21,9 @@ class ClientThread(threading.Thread):
         lista = string.split(',')
 
         if lista[0]=='p':
-            sql = """CREATE TABLE IF NOT EXISTS Professores(nome varchar(20), siape int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20),primary key(siape));"""
-
-            cursor.execute(sql)
+            
        
-            cursor.execute('INSERT INTO Professores  VALUES (%s,%s,%s,%s,%s,%s,%s)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
+            cursor.execute('INSERT INTO  Professores VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
 
             #cursor.execute('SELECT * from Professores')
             #for c in cursor:
@@ -36,11 +34,8 @@ class ClientThread(threading.Thread):
             
         if lista[0]=='m':
             #print("EH monitor!!!")
-            sql = """CREATE TABLE IF NOT EXISTS Monitores(nome varchar(20), matricula int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20),primary key(matricula));"""
-
-            cursor.execute(sql)
-       
-            cursor.execute('INSERT INTO Monitores  VALUES (%s,%s,%s,%s,%s,%s,%s)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
+           
+            cursor.execute('INSERT INTO Monitores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
 
             #cursor.execute('SELECT * from Monitores')
 
@@ -53,11 +48,11 @@ class ClientThread(threading.Thread):
 
         if lista[0]=='c':
             
-            sql = """CREATE TABLE IF NOT EXISTS Coodenadores(nome varchar(20), siape int, cpf varchar(20), senha varchar(20),email varchar(20),telefone varchar(20),disciplina varchar(20),primary key(siape));"""
+            
 
-            cursor.execute(sql)
+            
        
-            cursor.execute('INSERT INTO Coodenadores  VALUES (%s,%s,%s,%s,%s,%s,%s)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
+            cursor.execute('INSERT INTO Coordenadores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
 
             #cursor.execute('SELECT * from Coodenadores')
 
@@ -65,6 +60,71 @@ class ClientThread(threading.Thread):
             #   print(c)
             conexao.commit()
             conexao.close()
+
+        if lista[0] == "l":#l de logar
+            if(lista[1] == 'c'):
+                confEm = False
+                confSen = False
+                consulta = cursor.execute("SELECT * from Coordenadores")
+                for x in consulta.fetchall():
+                    for i in x:
+                        if i==lista[2]:
+                            confEm = True
+                        if i == lista[3]:
+                            confSen = True
+                if((confEm == True) and (confSen==True)):
+                    self.csocket.send("plog".encode())
+                else:
+                    self.csocket.send("nlog".encode())
+
+            if(lista[1] == 'p'):
+                confEm = False
+                confSen = False
+                consulta = cursor.execute("SELECT * from Professores")
+                for x in consulta.fetchall():
+                    for i in x:
+                        if i==lista[2]:
+                            confEm = True
+                        if i == lista[3]:
+                            confSen = True
+                if((confEm == True) and (confSen==True)):
+                    self.csocket.send("plog".encode())
+                else:
+                    self.csocket.send("nlog".encode())
+
+            if(lista[1] == 'm'):
+                confEm = False
+                confSen = False
+                consulta = cursor.execute("SELECT * from Monitores")
+                for x in consulta.fetchall():
+                    for i in x:
+                        if i==lista[2]:
+                            confEm = True
+                        if i == lista[3]:
+                            confSen = True
+                if((confEm == True) and (confSen==True)):
+                    self.csocket.send("plog".encode())
+                else:
+                    self.csocket.send("nlog".encode())
+
+            if(lista[1] == 't'):
+                confEm = False
+                confSen = False
+                consulta = cursor.execute("SELECT * from Tecnicos")
+                for x in consulta.fetchall():
+                    for i in x:
+                        if i==lista[2]:
+                            confEm = True
+                        if i == lista[3]:
+                            confSen = True
+                if((confEm == True) and (confSen==True)):
+                    self.csocket.send("plog".encode())
+                else:
+                    self.csocket.send("nlog".encode())
+                
+            
+                        
+                
         
 if __name__ == "__main__":
         

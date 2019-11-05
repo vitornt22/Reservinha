@@ -17,6 +17,8 @@ from AlterarEmail import Ui_AlterarEMAIL
 from AlterarTelefone import Ui_AlterarTELEFONE
 
 from redefinirSenha import Ui_RedefinirSenha
+from cliente import cliente
+
 
 import sys
 
@@ -195,13 +197,61 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         
     def logando(self):
         if( self.tela_inicio.verifica == 3):
-            self.QtStack.setCurrentIndex(2)
+            if( "@" in self.tela_login.CampoEmail.text()):
+                dados = "l"+","+"c"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                print("lixo",dados)
+                c1 = cliente(dados)
+                if(c1.client_socket.recv(1024).decode()=="plog"):
+                    self.QtStack.setCurrentIndex(2)
+            
+                else:
+                    QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
+            else:
+                QtWidgets.QMessageBox.about(None, "AVISO","EMAIL INVALIDO",)
+                
         if(self.tela_inicio.verifica == 2):
-            self.QtStack.setCurrentIndex(3)
+             if( "@" in self.tela_login.CampoEmail.text()):
+                dados = "l"+","+"p"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                print("lixo",dados)
+                c1 = cliente(dados)
+                if(c1.client_socket.recv(1024).decode()=="plog"):
+                    self.QtStack.setCurrentIndex(3)
+            
+                else:
+                    QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
+             else:
+                QtWidgets.QMessageBox.about(None, "AVISO","EMAIL INVALIDO",)
+
+                
+                
         if(self.tela_inicio.verifica == 1):
-            self.QtStack.setCurrentIndex(4)
+             if( "@" in self.tela_login.CampoEmail.text()):
+                dados = "l"+","+"m"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                print("lixo",dados)
+                c1 = cliente(dados)
+                if(c1.client_socket.recv(1024).decode()=="plog"):
+                    self.QtStack.setCurrentIndex(4)
+            
+                else:
+                    QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
+             else:
+                QtWidgets.QMessageBox.about(None, "AVISO","EMAIL INVALIDO",)
+                
         if(self.tela_inicio.verifica == 4):
-            self.QtStack.setCurrentIndex(5)
+            if( "@" in self.tela_login.CampoEmail.text()):
+                dados = "l"+","+"t"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                print("lixo",dados)
+                c1 = cliente(dados)
+                if(c1.client_socket.recv(1024).decode()=="plog"):
+                    self.QtStack.setCurrentIndex(5)
+            
+                else:
+                    QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
+            else:
+                QtWidgets.QMessageBox.about(None, "AVISO","EMAIL INVALIDO",)
+
+
+            
     def redifinir_senha(self):
         pass
 
