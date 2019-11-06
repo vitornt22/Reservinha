@@ -18,7 +18,7 @@ from AlterarTelefone import Ui_AlterarTELEFONE
 
 from redefinirSenha import Ui_RedefinirSenha
 from cliente import cliente
-
+from tela_esq_senha import Ui_Senha
 
 import sys
 
@@ -99,7 +99,10 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack7 = QtWidgets.QMainWindow()
 
         self.stack8 = QtWidgets.QMainWindow()
-            
+
+        self.stack9 = QtWidgets.QMainWindow()
+        
+        
             
         self.tela_inicio = Ui_inicio()
         self.tela_login = Ui_Login()
@@ -110,17 +113,19 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_alterar_email = Ui_AlterarEMAIL()
         self.tela_alterar_telefone = Ui_AlterarTELEFONE()
         self.tela_alterar_senha = Ui_RedefinirSenha()
-
+        self.tela_esq_senha = Ui_Senha()
         
         self.tela_inicio.setupUi(self.stack0)
         self.tela_login.setupUi(self.stack1)
-        self.tela_coordenador.setupUi(self.stack2,None)
-        self.tela_professor.setupUi(self.stack3,None)
+        self.tela_coordenador.setupUi(self.stack2)
+        self.tela_professor.setupUi(self.stack3)
         self.tela_monitor.setupUi(self.stack4)
-        self.tela_tecnico.setupUi(self.stack5,None)        
+        self.tela_tecnico.setupUi(self.stack5)        
         self.tela_alterar_email.setupUi(self.stack6)
         self.tela_alterar_telefone.setupUi(self.stack7)
         self.tela_alterar_senha.setupUi(self.stack8)
+        
+        self.tela_esq_senha.setupUi(self.stack9)
         
         self.QtStack.addWidget(self.stack0)
         self.QtStack.addWidget(self.stack1)
@@ -131,6 +136,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack6)
         self.QtStack.addWidget(self.stack7)
         self.QtStack.addWidget(self.stack8)
+        self.QtStack.addWidget(self.stack9)
         
 
 
@@ -172,8 +178,9 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         self.tela_professor.SenhaBotao.clicked.connect(self.alterar_senha)
 
         self.tela_monitor.CancelarBotao.clicked.connect(self.cancelar)
+        self.tela_login.EsqueceuSenha.clicked.connect(self.redefinir_senha)
 
-
+        self.tela_esq_senha.codigo.clicked.connect(self.cancelar)
 
         
     def entrar_coord(self):
@@ -252,9 +259,9 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
 
 
             
-    def redifinir_senha(self):
-        pass
-
+    def redefinir_senha(self):
+        self.QtStack.setCurrentIndex(9)
+        
     def cancelar(self):
         self.QtStack.setCurrentIndex(1)
 
@@ -266,6 +273,8 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
 
     def alterar_senha(self):
         self.QtStack.setCurrentIndex(8)
+        
+    
         
     def sair(self):
         sys.exit(app.exec_())

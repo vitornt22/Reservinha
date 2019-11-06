@@ -31,6 +31,40 @@ class ClientThread(threading.Thread):
             
             conexao.commit()
             conexao.close()
+
+        if(lista[0]=="verifica"):
+            conf = False
+            if(conf==False):
+                consulta = cursor.execute("SELECT Senha from Tecnicos")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+            if(conf==False):
+                consulta = cursor.execute("SELECT Senha from Monitores")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+            if(conf==False):
+                consulta = cursor.execute("SELECT Senha from Coordenadores")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+
+            if(conf==False):
+                consulta = cursor.execute("SELECT Email from Professores")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+            
+            if(conf==True):
+                print("existe")
+                self.csocket.send("exist".encode())
+            else:
+                self.csocket.send("nexist".encode())
             
         if lista[0]=='m':
             #print("EH monitor!!!")
@@ -44,7 +78,87 @@ class ClientThread(threading.Thread):
 
             conexao.commit()
             conexao.close()
+        if(lista[0]=="verifica"):
+            print(lista)
+            print("entrou no altera")
+            conf = False
             
+            try:
+                cursor.execute("UPDATE Tecnicos SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                conexao.commit()
+                    
+            except:
+                pass
+                
+                    
+            
+            try:
+                cursor.execute("UPDATE Monitores SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                conexao.commit()
+                
+            except:
+                pass
+                
+                    
+            
+            try:
+                cursor.execute("UPDATE Professores SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                conexao.commit()
+                    
+            except:
+                pass
+                
+                    
+
+            
+            try:
+                cursor.execute("UPDATE Coordenadores SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                print("aqui nos coordenador")
+                conexao.commit()
+                   
+            except:
+                pass
+                
+                
+            
+            
+                
+        if(lista[0]=="envia"):
+            conf = False
+            if(conf==False):
+                consulta = cursor.execute("SELECT Email from Tecnicos")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+            if(conf==False):
+                consulta = cursor.execute("SELECT Email from Monitores")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+            if(conf==False):
+                consulta = cursor.execute("SELECT Email from Coordenadores")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+
+            if(conf==False):
+                consulta = cursor.execute("SELECT Email from Professores")
+                for x in consulta.fetchall():
+                    if(x[0]==lista[1]):
+                        conf = True
+                    
+            
+            if(conf==True):
+                print("existe")
+                self.csocket.send("exist".encode())
+            else:
+                self.csocket.send("nexist".encode())
+
+
+
 
         if lista[0]=='c':
             
@@ -121,8 +235,12 @@ class ClientThread(threading.Thread):
                     self.csocket.send("plog".encode())
                 else:
                     self.csocket.send("nlog".encode())
-                
-            
+
+                    
+        
+
+                            
+                       
                         
                 
         

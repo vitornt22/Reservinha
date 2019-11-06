@@ -10,8 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from verificaEmail import verificaEmail, verificaCpf, verificaTelefone, verificaMat
 from cliente import cliente
 class Ui_MenuTecnico(object):
-    def setupUi(self, MainWindow,tecnico):
-        self.tecnico = tecnico
+    def setupUi(self, MainWindow):
+        self.tecnico = None
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(711, 429)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -386,7 +386,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MenuTecnico()
-    ui.setupUi(MainWindow,tecnico=None)
+    ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
 

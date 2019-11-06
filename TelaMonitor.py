@@ -10,6 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MenuMonitor(object):
     def setupUi(self, MainWindow):
+        self.monitor = None
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
         MainWindow.resize(711, 429)
