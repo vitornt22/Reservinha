@@ -111,7 +111,8 @@ class Ui_Senha(object):
         
         self.redef.clicked.connect(self.altera_senha)
     def envia_codigo(self):
-        dados = "envia"+","+self.Email.text()
+        self.email = self.Email.text()
+        dados = "envia"+","+self.email
         print(dados)
         
         c1 = cliente(dados)
@@ -121,7 +122,7 @@ class Ui_Senha(object):
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login("reservadossantos9@gmail.com", "euconsigo123")
-            server.sendmail("reservadossantos9@gmail.com",self.Email.text() , str(codigo))
+            server.sendmail("reservadossantos9@gmail.com",self.email, str(codigo))
             QtWidgets.QMessageBox.about(None, "AVISO","CODIGO ENVIADO VERFIQUE O EMAIL",)
 
         else:
@@ -133,7 +134,7 @@ class Ui_Senha(object):
         
         
         if(self.codigo==self.Nova_senha.text() and  len(self.lineEdit_3.text())>1):
-           dados = "verifica"+","+self.Email.text()+","+self.lineEdit_3.text()
+           dados = "verifica"+","+self.email+","+self.lineEdit_3.text()
            print(dados)
            c1 = cliente(dados)
            QtWidgets.QMessageBox.about(None, "AVISO","Senha redefinida com sucesso!",)     

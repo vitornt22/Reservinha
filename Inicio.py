@@ -15,7 +15,7 @@ from TelaMonitor import Ui_MenuMonitor
 from TelaTecnico import Ui_MenuTecnico
 from AlterarEmail import Ui_AlterarEMAIL
 from AlterarTelefone import Ui_AlterarTELEFONE
-
+from hashlib import md5
 from redefinirSenha import Ui_RedefinirSenha
 from cliente import cliente
 from tela_esq_senha import Ui_Senha
@@ -205,7 +205,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
     def logando(self):
         if( self.tela_inicio.verifica == 3):
             if( "@" in self.tela_login.CampoEmail.text()):
-                dados = "l"+","+"c"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                dados = "l"+","+"c"+","+self.tela_login.CampoEmail.text()+","+md5(self.tela_login.CampoSenha.text().encode('utf-8')).hexdigest()
                 
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
@@ -218,7 +218,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 
         if(self.tela_inicio.verifica == 2):
              if( "@" in self.tela_login.CampoEmail.text()):
-                dados = "l"+","+"p"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                dados = "l"+","+"p"+","+self.tela_login.CampoEmail.text()+","+md5(self.tela_login.CampoSenha.text().encode('utf-8')).hexdigest()
                 
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
@@ -233,7 +233,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 
         if(self.tela_inicio.verifica == 1):
              if( "@" in self.tela_login.CampoEmail.text()):
-                dados = "l"+","+"m"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                dados = "l"+","+"m"+","+self.tela_login.CampoEmail.text()+","+md5(self.tela_login.CampoSenha.text().encode('utf-8')).hexdigest()
                 print("lixo",dados)
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
@@ -246,7 +246,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 
         if(self.tela_inicio.verifica == 4):
             if( "@" in self.tela_login.CampoEmail.text()):
-                dados = "l"+","+"t"+","+self.tela_login.CampoEmail.text()+","+self.tela_login.CampoSenha.text()
+                dados = "l"+","+"t"+","+self.tela_login.CampoEmail.text()+","+md5(self.tela_login.CampoSenha.text().encode('utf-8')).hexdigest()
                 
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):

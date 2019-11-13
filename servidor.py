@@ -3,6 +3,7 @@ from professor import professor
 from monitor import monitor
 from coordenador import coordenador
 import sqlite3
+from hashlib import md5
 class ClientThread(threading.Thread):
     
     def __init__(self,clientAddress,clientsocket):
@@ -19,12 +20,14 @@ class ClientThread(threading.Thread):
        
         string = recebe.decode()
         lista = string.split(',')
-
+        
         if lista[0]=='p':
-            
-       
-            cursor.execute('INSERT INTO  Professores VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
 
+            
+           
+       
+            cursor.execute('INSERT INTO  Professores VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
+            
             #cursor.execute('SELECT * from Professores')
             #for c in cursor:
             #   print(c)
@@ -69,7 +72,7 @@ class ClientThread(threading.Thread):
         if lista[0]=='m':
             #print("EH monitor!!!")
            
-            cursor.execute('INSERT INTO Monitores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
+            cursor.execute('INSERT INTO Monitores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
 
             #cursor.execute('SELECT * from Monitores')
 
@@ -84,7 +87,7 @@ class ClientThread(threading.Thread):
             conf = False
             
             try:
-                cursor.execute("UPDATE Tecnicos SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                cursor.execute("UPDATE Tecnicos SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
                 conexao.commit()
                     
             except:
@@ -93,7 +96,7 @@ class ClientThread(threading.Thread):
                     
             
             try:
-                cursor.execute("UPDATE Monitores SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                cursor.execute("UPDATE Monitores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
                 conexao.commit()
                 
             except:
@@ -102,7 +105,7 @@ class ClientThread(threading.Thread):
                     
             
             try:
-                cursor.execute("UPDATE Professores SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                cursor.execute("UPDATE Professores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
                 conexao.commit()
                     
             except:
@@ -112,7 +115,7 @@ class ClientThread(threading.Thread):
 
             
             try:
-                cursor.execute("UPDATE Coordenadores SET Senha = ? WHERE Email = ? ",(lista[2],lista[1]))
+                cursor.execute("UPDATE Coordenadores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
                 print("aqui nos coordenador")
                 conexao.commit()
                    
@@ -166,7 +169,7 @@ class ClientThread(threading.Thread):
 
             
        
-            cursor.execute('INSERT INTO Coordenadores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],lista[4],lista[5],lista[6],lista[7]))
+            cursor.execute('INSERT INTO Coordenadores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
 
             #cursor.execute('SELECT * from Coodenadores')
 
