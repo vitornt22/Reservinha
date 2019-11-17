@@ -4,6 +4,8 @@ from monitor import monitor
 from coordenador import coordenador
 import sqlite3
 from hashlib import md5
+from valida_dados import verifica_senha,verifica_siape,verifica_email,verifica_telefone,verifica_cpf
+
 class ClientThread(threading.Thread):
     
     def __init__(self,clientAddress,clientsocket):
@@ -22,12 +24,30 @@ class ClientThread(threading.Thread):
         lista = string.split(',')
         
         if lista[0]=='p':
+            msg = ''
+            
+            if(verifica_siape(lista[2])):
+               msg +='Siape,'
 
-            
-           
-       
-            cursor.execute('INSERT INTO  Professores VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
-            
+
+            if(verifica_cpf(lista[3])):
+               msg +='Cpf,'
+            if(verifica_senha(lista[4])):
+                msg += 'Senha,'
+
+            if(verifica_email(lista[5])):
+                msg+='Email,'
+
+            if(verifica_telefone(lista[6])):
+                msg+='Telefone,'
+
+            if(len(msg)==0):
+                msg = "certo"
+                self.csocket.send(msg.encode())
+                cursor.execute('INSERT INTO  Professores VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
+            else:
+                self.csocket.send(msg.encode())
+                
             #cursor.execute('SELECT * from Professores')
             #for c in cursor:
             #   print(c)
@@ -35,45 +55,33 @@ class ClientThread(threading.Thread):
             conexao.commit()
             conexao.close()
 
-        if(lista[0]=="verifica"):
-            conf = False
-            if(conf==False):
-                consulta = cursor.execute("SELECT Senha from Tecnicos")
-                for x in consulta.fetchall():
-                    if(x[0]==lista[1]):
-                        conf = True
-                    
-            if(conf==False):
-                consulta = cursor.execute("SELECT Senha from Monitores")
-                for x in consulta.fetchall():
-                    if(x[0]==lista[1]):
-                        conf = True
-                    
-            if(conf==False):
-                consulta = cursor.execute("SELECT Senha from Coordenadores")
-                for x in consulta.fetchall():
-                    if(x[0]==lista[1]):
-                        conf = True
-                    
-
-            if(conf==False):
-                consulta = cursor.execute("SELECT Email from Professores")
-                for x in consulta.fetchall():
-                    if(x[0]==lista[1]):
-                        conf = True
-                    
-            
-            if(conf==True):
-                print("existe")
-                self.csocket.send("exist".encode())
-            else:
-                self.csocket.send("nexist".encode())
+        
             
         if lista[0]=='m':
             #print("EH monitor!!!")
-           
-            cursor.execute('INSERT INTO Monitores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
+            msg = ''
+            
+            if(verifica_siape(lista[2])):
+               msg +='Matricula,'
 
+
+            if(verifica_cpf(lista[3])):
+               msg +='Cpf,'
+            if(verifica_senha(lista[4])):
+                msg += 'Senha,'
+
+            if(verifica_email(lista[5])):
+                msg+='Email,'
+
+            if(verifica_telefone(lista[6])):
+                msg+='Telefone,'
+
+            if(len(msg)==0):
+                msg = "certo"
+                self.csocket.send(msg.encode())
+                cursor.execute('INSERT INTO Monitores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
+            else:
+                self.csocket.send(msg.encode())
             #cursor.execute('SELECT * from Monitores')
 
             #for c in cursor:
@@ -165,12 +173,29 @@ class ClientThread(threading.Thread):
 
         if lista[0]=='c':
             
+            msg = ''
             
+            if(verifica_siape(lista[2])):
+               msg +='Siape,'
 
+
+            if(verifica_cpf(lista[3])):
+               msg +='Cpf,'
+            if(verifica_senha(lista[4])):
+                msg += 'Senha,'
+
+            if(verifica_email(lista[5])):
+                msg+='Email,'
+
+            if(verifica_telefone(lista[6])):
+                msg+='Telefone,'
             
-       
-            cursor.execute('INSERT INTO Coordenadores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
-
+            if(len(msg)==0):
+                msg = 'certo'
+                self.csocket.send(msg.encode())
+                cursor.execute('INSERT INTO Coordenadores  VALUES (?,?,?,?,?,?,?)', (lista[1],lista[2],lista[3],md5(lista[4].encode('utf-8')).hexdigest(),lista[5],lista[6],lista[7]))
+            else:
+                self.csocket.send(msg.encode())
             #cursor.execute('SELECT * from Coodenadores')
 
             #for c in cursor:

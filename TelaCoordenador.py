@@ -516,15 +516,19 @@ class Ui_MenuCoordenador(object):
         if verificaEmail(email) and verificaCpf(cpf) and verificaTelefone(telefone) and len(nome)> 0 and verificaMat(siape) and len(senha) >0 and len(disciplina)>0:
             string = 'p'+","+nome+","+siape+","+cpf+","+senha+","+email+","+telefone+","+disciplina
             #print(string)
-            cl = cliente(string)
-            QtWidgets.QMessageBox.about(None, "Cadastro","Cadastro realizado com sucesso!!!",)
-            self.CampoNome.clear()
-            self.CampoSiape.clear()
-            self.CampoTelefone.clear()
-            self.CampoEmail.clear()
-            self.CampoSenha.clear()
-            self.CampoCpf.clear()
-            self.CampoDisciplina.clear()
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+            if(string2=="certo"):
+                QtWidgets.QMessageBox.about(None, "Cadastro","Cadastro realizado com sucesso!!!",)
+                self.CampoNome.clear()
+                self.CampoSiape.clear()
+                self.CampoTelefone.clear()
+                self.CampoEmail.clear()
+                self.CampoSenha.clear()
+                self.CampoCpf.clear()
+                self.CampoDisciplina.clear()
+            else:
+                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2)
         else:
             QtWidgets.QMessageBox.about(None, "Alguns Valores invalidos","Preencha os campos com valores validos",)
 

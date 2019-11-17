@@ -137,8 +137,12 @@ class Ui_Senha(object):
            dados = "verifica"+","+self.email+","+self.lineEdit_3.text()
            print(dados)
            c1 = cliente(dados)
+           
+           
            QtWidgets.QMessageBox.about(None, "AVISO","Senha redefinida com sucesso!",)     
-
+           self.lineEdit_3.clear()
+           self.Email.clear()
+           self.Nova_senha.clear()
                  
            
         else:

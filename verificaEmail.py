@@ -1,5 +1,5 @@
 def verificaEmail(email):
-	emails=['gmail.com','hotmail.com','ufpi.com.br']
+	emails=['gmail.com','hotmail.com','ufpi.com.br',"bol.com.br"]
 	try: 
 		lista= email.split('@')
 		if lista[1] in emails:
