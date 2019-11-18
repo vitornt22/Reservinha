@@ -19,6 +19,10 @@ from hashlib import md5
 from redefinirSenha import Ui_RedefinirSenha
 from cliente import cliente
 from tela_esq_senha import Ui_Senha
+from tecnico import tecnico
+from monitor import monitor
+from professor import professor
+from coordenador import coordenador
 
 import sys
 
@@ -209,8 +213,29 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
+                    dados = c1.client_socket.recv(2048).decode()
+                    #print("Dados",dados)
+                    lista = dados.split(",")
+                    print("A lista",lista)
+                    
+                    coord = coordenador(None,None,None,None,None,None)
+                    coord.setTelefone(lista[5])
+                    coord.setCpf(lista[2])
+                    coord.setSiape(int(lista[1]))
+                    coord.setNome(lista[0])
+                    coord.setCurso(lista[6])
+                    coord.setEmail(lista[4])
+                    coord.setSenha(lista[3])
+                    print("Nome",coord.getNome())
+                    print("Siape",coord.getSIAPE())
+                    print("Cpf",coord.getCpf())
+                    print("Senha",coord.getSenha())
+                    print("Email:",coord.getEmail())
+                    print("Telefone",coord.getTelefone())
+                    print("Disciplina",coord.getCurso())
+                    
+                    self.tela_coordenador.loga_coordenador(coord)
                     self.QtStack.setCurrentIndex(2)
-            
                 else:
                     QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
             else:
@@ -222,6 +247,26 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
+                    dados = c1.client_socket.recv(2048).decode()
+                    lista = dados.split(",")
+                    print("A lista",lista)
+                    prof = professor(None,None,None,None,None,None,None)
+                    prof.setTelefone(lista[5])
+                    prof.setCpf(lista[2])
+                    prof.setSiape(int(lista[1]))
+                    prof.setNome(lista[0])
+                    prof.setDisciplina(lista[6])
+                    prof.setEmail(lista[4])
+                    prof.setSenha(lista[3])
+                    print("Nome",prof.getNome())
+                    print("Siape",prof.getSIAPE())
+                    print("Cpf",prof.getCpf())
+                    print("Senha",prof.getSenha())
+                    print("Email:",prof.getEmail())
+                    print("Telefone",prof.getTelefone())
+                    print("Disciplina",prof.getDisciplina())
+                    
+                    self.tela_professor.loga_professor(prof)
                     self.QtStack.setCurrentIndex(3)
             
                 else:
@@ -237,6 +282,27 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 print("lixo",dados)
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
+                    dados = c1.client_socket.recv(2048).decode()
+                    lista = dados.split(",")
+                    print("A lista",lista)
+                    monit = monitor(None,None,None,None,None,None,None,None)
+                    monit.setTelefone(lista[5])
+                    monit.setCpf(lista[2])
+                    monit.setMatricula(int(lista[1]))
+                    monit.setNome(lista[0])
+                    monit.setDisciplina(lista[6])
+                    monit.setEmail(lista[4])
+                    monit.setSenha(lista[3])
+                    print("Nome",monit.getNome())
+                    print("Matricula",monit.getMatricula())
+                    print("Cpf",monit.getCpf())
+                    print("Senha",monit.getSenha())
+                    print("Email:",monit.getEmail())
+                    print("Telefone",monit.getTelefone())
+                    print("Disciplina",monit.getDisciplina())
+                    
+                    self.tela_monitor.loga_monitor(monit)
+                    
                     self.QtStack.setCurrentIndex(4)
             
                 else:
@@ -250,6 +316,21 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                 
                 c1 = cliente(dados)
                 if(c1.client_socket.recv(1024).decode()=="plog"):
+                    dados = c1.client_socket.recv(2048).decode()
+                    lista = dados.split(",")
+                    print("A lista",lista)
+                    tec = tecnico(None,None,None,None,None)
+                    tec.setTelefone(lista[3])
+                    tec.setCpf(lista[1])
+                    tec.setNome(lista[0])
+                    tec.setEmail(lista[2])
+                    tec.setSenha(lista[4])
+                    print("Nome",tec.getNome())
+                    print("Cpf",tec.getCpf())
+                    print("Senha",tec.getSenha())
+                    print("Email:",tec.getEmail())
+                    print("Telefone",tec.getTelefone())
+                    self.tela_tecnico.loga_tecnico(tec)
                     self.QtStack.setCurrentIndex(5)
             
                 else:

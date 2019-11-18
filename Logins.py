@@ -100,6 +100,7 @@ class Ui_Login(object):
         self.CampoEmail.setGeometry(QtCore.QRect(220, 130, 281, 29))
         self.CampoEmail.setObjectName("CampoEmail")
         self.CampoSenha = QtWidgets.QLineEdit(self.centralwidget)
+        self.CampoSenha.setEchoMode(QtWidgets.QLineEdit.Password)
         self.CampoSenha.setGeometry(QtCore.QRect(220, 180, 281, 29))
         self.CampoSenha.setObjectName("CampoSenha")
         self.Titulo = QtWidgets.QLabel(self.centralwidget)

@@ -63,6 +63,7 @@ class Ui_Senha(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.Nova_senha = QtWidgets.QLineEdit(self.centralwidget)
+        
         self.Nova_senha.setGeometry(QtCore.QRect(170, 200, 301, 41))
         self.Nova_senha.setStyleSheet("QLineEdit{\n"
 "    background-color: white;\n"
@@ -95,6 +96,7 @@ class Ui_Senha(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.lineEdit_3.setEchoMode(QtWidgets.QLineEdit.Password)
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

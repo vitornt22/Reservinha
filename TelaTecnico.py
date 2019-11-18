@@ -384,7 +384,16 @@ class Ui_MenuTecnico(object):
         else:
             QtWidgets.QMessageBox.about(None, "Alguns Valores invalidos","Preencha os campos com valores validos",)
 
-   
+    def mostrar1(self):
+        print("Nome",self.tecnico.getNome())
+        print("Cpf",self.tecnico.getCpf())
+        print("Senha",self.tecnico.getSenha())
+        print("Email:",self.tecnico.getEmail())
+        print("Telefone",self.tecnico.getTelefone())
+    def loga_tecnico(self,tec):
+        self.tecnico = tec
+        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo tecnico: "+self.tecnico.getNome(),)
+        self.mostrar1()
 
 
 if __name__ == "__main__":

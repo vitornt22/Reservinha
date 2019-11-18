@@ -240,7 +240,19 @@ class Ui_MenuMonitor(object):
         self.TelefoneBotao.setText(_translate("MainWindow", "TELEFONE"))
         self.CancelarBotao.setText(_translate("MainWindow", "CANCELAR"))
         self.TabelaGeral.setTabText(self.TabelaGeral.indexOf(self.tab), _translate("MainWindow", "Alterar Dados"))
-
+    def mostrar(self):
+        print("Nome",self.monitor.getNome())
+        print("Siape",self.monitor.getMatricula())
+        print("Cpf",self.monitor.getCpf())
+        print("Senha",self.monitor.getSenha())
+        print("Email:",self.monitor.getEmail())
+        print("Telefone",self.monitor.getTelefone())
+        print("Matricula",self.monitor.getDisciplina())
+        
+    def loga_monitor(self,monitor1):
+        self.monitor = monitor1
+        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo monitor: "+self.monitor.getNome(),)
+        self.mostrar()
 
 if __name__ == "__main__":
     import sys

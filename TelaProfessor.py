@@ -9,11 +9,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from verificaEmail import verificaEmail, verificaCpf, verificaTelefone, verificaMat
 from cliente import cliente
-
+from professor import professor
 
 class Ui_MenuProfessor(object):
     def setupUi(self, MenuProfessor):
         MenuProfessor.setObjectName("MenuProfessor")
+        self.professor = None
         MenuProfessor.setEnabled(True)
         MenuProfessor.resize(697, 459)
         MenuProfessor.setAutoFillBackground(False)
@@ -506,7 +507,14 @@ class Ui_MenuProfessor(object):
     def funcionalidade(self):
         self.Cadastrar.clicked.connect(self.cadastrar)
         self.cancelar.clicked.connect(self.Cancelar)
-    
+    def mostrar(self):
+        print("Nome",self.professor.getNome())
+        print("Siape",self.professor.getSIAPE())
+        print("Cpf",self.professor.getCpf())
+        print("Senha",self.professor.getSenha())
+        print("Email:",self.professor.getEmail())
+        print("Telefone",self.professor.getTelefone())
+        print("Disciplina",self.professor.getDisciplina())
     def cadastrar(self):
         nome=self.CampoNome.text()
         mat= self.CampoSiape.text()
@@ -537,7 +545,10 @@ class Ui_MenuProfessor(object):
 
     def Cancelar(self):
         pass
-
+    def loga_professor(self,professor1):
+        self.professor = professor1
+        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo professor: "+self.professor.getNome(),)
+        self.mostrar()
 
 if __name__ == "__main__":
     import sys

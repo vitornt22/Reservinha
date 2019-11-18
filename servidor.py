@@ -204,6 +204,7 @@ class ClientThread(threading.Thread):
             conexao.close()
 
         if lista[0] == "l":#l de logar
+            string = ''
             if(lista[1] == 'c'):
                 confEm = False
                 confSen = False
@@ -216,6 +217,18 @@ class ClientThread(threading.Thread):
                             confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
+                    #print("X3:",x[3],"x4",x[4])
+                    #print("Lista3:",lista[2],"lista4",lista[3])
+                    consulta = cursor.execute("SELECT * from Coordenadores")
+                    for x in consulta.fetchall():
+                        
+                        if((x[3] == lista[3]) and (x[4] == lista[2])):
+                            string+=str(x[0])+','+str(x[1])+','+str(x[2])+','+str(x[3])+','+str(x[4])+','+str(x[5])+','+str(x[6])
+                            #print("Dados do logador",string)
+                            self.csocket.send(string.encode())
+                            break
+
+                            
                 else:
                     self.csocket.send("nlog".encode())
 
@@ -231,6 +244,14 @@ class ClientThread(threading.Thread):
                             confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
+                    consulta = cursor.execute("SELECT * from Professores")
+                    for x in consulta.fetchall():
+                        
+                        if((x[3] == lista[3]) and (x[4] == lista[2])):
+                            string+=str(x[0])+','+str(x[1])+','+str(x[2])+','+str(x[3])+','+str(x[4])+','+str(x[5])+','+str(x[6])
+                            #print("Dados do logador",string)
+                            self.csocket.send(string.encode())
+                            break
                 else:
                     self.csocket.send("nlog".encode())
 
@@ -246,6 +267,14 @@ class ClientThread(threading.Thread):
                             confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
+                    consulta = cursor.execute("SELECT * from Monitores")
+                    for x in consulta.fetchall():
+                        
+                        if((x[3] == lista[3]) and (x[4] == lista[2])):
+                            string+=str(x[0])+','+str(x[1])+','+str(x[2])+','+str(x[3])+','+str(x[4])+','+str(x[5])+','+str(x[6])
+                            #print("Dados do logador",string)
+                            self.csocket.send(string.encode())
+                            break
                 else:
                     self.csocket.send("nlog".encode())
 
@@ -261,6 +290,14 @@ class ClientThread(threading.Thread):
                             confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
+                    consulta = cursor.execute("SELECT * from Tecnicos")
+                    for x in consulta.fetchall():
+                        
+                        if((x[4] == lista[3]) and (x[2] == lista[2])):
+                            string+=str(x[0])+','+str(x[1])+','+str(x[2])+','+str(x[3])+','+str(x[4])
+                            print("Dados do logador",string)
+                            self.csocket.send(string.encode())
+                            break
                 else:
                     self.csocket.send("nlog".encode())
 

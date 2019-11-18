@@ -18,6 +18,7 @@ class Ui_MenuCoordenador(object):
         MenuCoordenador.setAutoFillBackground(False)
         MenuCoordenador.setAnimated(True)
         MenuCoordenador.setUnifiedTitleAndToolBarOnMac(False)
+        self.coordenador = None
         self.centralwidget = QtWidgets.QWidget(MenuCoordenador)
         self.centralwidget.setObjectName("centralwidget")
         self.Fundogeral = QtWidgets.QLabel(self.centralwidget)
@@ -498,8 +499,15 @@ class Ui_MenuCoordenador(object):
         self.SenhaBotao_3.setText(_translate("MenuCoordenador", "TELEFONE"))
         self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.tab), _translate("MenuCoordenador", "Alterar Dados"))
         self.funcionalidade()
-
-
+       
+    def mostrar(self):
+        print("Nome",self.coordenador.getNome())
+        print("Siape",self.coordenador.getSIAPE())
+        print("Cpf",self.coordenador.getCpf())
+        print("Senha",self.coordenador.getSenha())
+        print("Email:",self.coordenador.getEmail())
+        print("Telefone",self.coordenador.getTelefone())
+        print("Disciplina",self.coordenador.getCurso())
     def funcionalidade(self):
         self.Cadastrar.clicked.connect(self.cadastrar)
         self.cancelar.clicked.connect(self.Cancelar)
@@ -534,6 +542,10 @@ class Ui_MenuCoordenador(object):
 
     def Cancelar(self):
         pass
+    def loga_coordenador(self,coordenador):
+        self.coordenador = coordenador
+        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo coordenador: "+self.coordenador.getNome(),)
+        self.mostrar()
 
 if __name__ == "__main__":
     import sys
