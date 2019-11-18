@@ -10,6 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_AlterarTELEFONE(object):
     def setupUi(self, MainWindow):
+        self.pessoa = None
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(620, 468)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -85,7 +86,8 @@ class Ui_AlterarTELEFONE(object):
         self.Alterar.setText(_translate("MainWindow", "Alterar"))
         self.NovoTelefone.setText(_translate("MainWindow", "Novo Telefone"))
 
-
+    def getPessoa(self,pessoa):
+        self.pessoa = pessoa
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

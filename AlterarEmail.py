@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_AlterarEMAIL(object):
     def setupUi(self, AlterarEMAIL):
-        
+        self.pessoa = None
         AlterarEMAIL.setObjectName("AlterarEMAIL")
         AlterarEMAIL.resize(653, 461)
         self.centralwidget = QtWidgets.QWidget(AlterarEMAIL)
@@ -110,6 +110,9 @@ class Ui_AlterarEMAIL(object):
         self.label_3.setText(_translate("AlterarEMAIL", "ALTERAR EMAIL"))
         self.label.setText(_translate("AlterarEMAIL", "NOVO EMAIL "))
 
+
+    def getPessoa(self,pessoa):
+        self.pessoa = pessoa
 
 if __name__ == "__main__":
     import sys

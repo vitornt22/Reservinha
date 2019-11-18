@@ -10,6 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_RedefinirSenha(object):
     def setupUi(self, RedefinirSenha):
+        self.pessoa = None
         RedefinirSenha.setObjectName("RedefinirSenha")
         RedefinirSenha.resize(718, 493)
         self.centralwidget = QtWidgets.QWidget(RedefinirSenha)
@@ -112,7 +113,8 @@ class Ui_RedefinirSenha(object):
         self.Cancelar.setText(_translate("RedefinirSenha", "CANCELAR"))
         self.SenhaAntiga.setText(_translate("RedefinirSenha", "SENHA ANTIGA"))
 
-
+    def getPessoa(self,pessoa):
+        self.pessoa = pessoa
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
