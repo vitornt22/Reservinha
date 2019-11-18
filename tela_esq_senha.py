@@ -139,12 +139,16 @@ class Ui_Senha(object):
            dados = "verifica"+","+self.email+","+self.lineEdit_3.text()
            print(dados)
            c1 = cliente(dados)
+           string = c1.client_socket.recv(1024).decode()
+           print("A string",string)
+           if(string =='certo'):
            
-           
-           QtWidgets.QMessageBox.about(None, "AVISO","Senha redefinida com sucesso!",)     
-           self.lineEdit_3.clear()
-           self.Email.clear()
-           self.Nova_senha.clear()
+               QtWidgets.QMessageBox.about(None, "AVISO","Senha redefinida com sucesso!",)     
+               self.lineEdit_3.clear()
+               self.Email.clear()
+               self.Nova_senha.clear()
+           else:
+                QtWidgets.QMessageBox.warning(None, "AVISO","Essa senha já está cadastrada",)
                  
            
         else:

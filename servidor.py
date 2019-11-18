@@ -92,20 +92,30 @@ class ClientThread(threading.Thread):
         if(lista[0]=="verifica"):
             print(lista)
             print("entrou no altera")
-            conf = False
+            msg = ''
             
             try:
-                cursor.execute("UPDATE Tecnicos SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
-                conexao.commit()
-                    
+                if(not (verifica_senha(lista[2]))):
+                    cursor.execute("UPDATE Tecnicos SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
+                    conexao.commit()
+                    msg = "certo"
+                    self.csocket.send(msg.encode())
+                else:
+                    msg = "errado"
+                    self.csocket.send(msg.encode())
             except:
                 pass
                 
                     
             
             try:
-                cursor.execute("UPDATE Monitores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
-                conexao.commit()
+                if(not (verifica_senha(lista[2]))):
+                    cursor.execute("UPDATE Monitores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
+                    conexao.commit()
+                    msg = "certo"
+                else:
+                    msg = "errado"
+                    self.csocket.send(msg.encode())
                 
             except:
                 pass
@@ -113,8 +123,14 @@ class ClientThread(threading.Thread):
                     
             
             try:
-                cursor.execute("UPDATE Professores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
-                conexao.commit()
+                if(not (verifica_senha(lista[2]))):
+                    cursor.execute("UPDATE Professores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
+                    conexao.commit()
+                    msg = "certo"
+                else:
+                    msg = "errado"
+                    self.csocket.send(msg.encode())
+                
                     
             except:
                 pass
@@ -123,9 +139,14 @@ class ClientThread(threading.Thread):
 
             
             try:
-                cursor.execute("UPDATE Coordenadores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
-                print("aqui nos coordenador")
-                conexao.commit()
+                if(not(verifica_senha(lista[2]))):
+                    cursor.execute("UPDATE Coordenadores SET Senha = ? WHERE Email = ? ",(md5(lista[2].encode('utf-8')).hexdigest(),lista[1]))
+                    print("aqui nos coordenador")
+                    conexao.commit()
+                    msg = "certo"
+                else:
+                    msg = "errado"
+                    self.csocket.send(msg.encode())
                    
             except:
                 pass
