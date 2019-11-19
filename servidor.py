@@ -231,11 +231,9 @@ class ClientThread(threading.Thread):
                 confSen = False
                 consulta = cursor.execute("SELECT * from Coordenadores")
                 for x in consulta.fetchall():
-                    for i in x:
-                        if i==lista[2]:
-                            confEm = True
-                        if i == lista[3]:
-                            confSen = True
+                    if((x[3] == lista[3]) and (x[4] == lista[2])):
+                        confEm = True
+                        confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
                     #print("X3:",x[3],"x4",x[4])
@@ -258,11 +256,9 @@ class ClientThread(threading.Thread):
                 confSen = False
                 consulta = cursor.execute("SELECT * from Professores")
                 for x in consulta.fetchall():
-                    for i in x:
-                        if i==lista[2]:
-                            confEm = True
-                        if i == lista[3]:
-                            confSen = True
+                    if((x[3] == lista[3]) and (x[4] == lista[2])):
+                        confEm = True
+                        confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
                     consulta = cursor.execute("SELECT * from Professores")
@@ -281,11 +277,10 @@ class ClientThread(threading.Thread):
                 confSen = False
                 consulta = cursor.execute("SELECT * from Monitores")
                 for x in consulta.fetchall():
-                    for i in x:
-                        if i==lista[2]:
-                            confEm = True
-                        if i == lista[3]:
-                            confSen = True
+                    if((x[3] == lista[3]) and (x[4] == lista[2])):
+                        confEm = True
+                        confSen = True
+                        
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
                     consulta = cursor.execute("SELECT * from Monitores")
@@ -304,11 +299,9 @@ class ClientThread(threading.Thread):
                 confSen = False
                 consulta = cursor.execute("SELECT * from Tecnicos")
                 for x in consulta.fetchall():
-                    for i in x:
-                        if i==lista[2]:
-                            confEm = True
-                        if i == lista[3]:
-                            confSen = True
+                   if((x[4] == lista[3]) and (x[2] == lista[2])):
+                        confEm = True
+                        confSen = True
                 if((confEm == True) and (confSen==True)):
                     self.csocket.send("plog".encode())
                     consulta = cursor.execute("SELECT * from Tecnicos")
