@@ -12,6 +12,7 @@ from cliente import cliente
 class Ui_MenuProfessor(object):
     def setupUi(self, MenuProfessor):
         self.professor = None
+        self.r_message = False
         MenuProfessor.setObjectName("MenuProfessor")
         MenuProfessor.setEnabled(True)
         MenuProfessor.resize(711, 474)
@@ -565,7 +566,9 @@ class Ui_MenuProfessor(object):
         pass
     def loga_professor(self,professor1):
         self.professor = professor1
-        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo professor: "+self.professor.getNome(),)
+        if(not self.r_message):
+            QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo professor: "+self.professor.getNome(),)
+            self.r_message = True
         self.mostrar()
 
 if __name__ == "__main__":

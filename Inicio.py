@@ -23,7 +23,8 @@ from tecnico import tecnico
 from monitor import monitor
 from professor import professor
 from coordenador import coordenador
-
+from verificaEmail import verificaEmail
+from valida_dados import verifica_email
 import sys
 
 
@@ -163,6 +164,8 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         self.tela_inicio.Botaocoordenador_3.clicked.connect(self.sair)
 
         self.tela_alterar_email.Remover_2.clicked.connect(self.logando) #remover_2 é o voltar
+        self.tela_alterar_email.Remover.clicked.connect(self.alterar_email_tela)
+        
         self.tela_alterar_telefone.Cancelar.clicked.connect(self.logando)
         self.tela_alterar_senha.Cancelar.clicked.connect(self.logando)
         
@@ -218,23 +221,28 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     lista = dados.split(",")
                     print("A lista",lista)
                     
-                    coord = coordenador(None,None,None,None,None,None)
-                    coord.setTelefone(lista[5])
-                    coord.setCpf(lista[2])
-                    coord.setSiape(int(lista[1]))
-                    coord.setNome(lista[0])
-                    coord.setCurso(lista[6])
-                    coord.setEmail(lista[4])
-                    coord.setSenha(lista[3])
-                    print("Nome",coord.getNome())
-                    print("Siape",coord.getSIAPE())
-                    print("Cpf",coord.getCpf())
-                    print("Senha",coord.getSenha())
-                    print("Email:",coord.getEmail())
-                    print("Telefone",coord.getTelefone())
-                    print("Disciplina",coord.getCurso())
+                    self.coord = coordenador(None,None,None,None,None,None)
+                    self.coord.setTelefone(lista[5])
+                    self.coord.setCpf(lista[2])
+                    self.coord.setSiape(int(lista[1]))
+                    self.coord.setNome(lista[0])
+                    self.coord.setCurso(lista[6])
+                    self.coord.setEmail(lista[4])
+                    self.coord.setSenha(lista[3])
+                    print("Nome",self.coord.getNome())
+                    print("Siape",self.coord.getSIAPE())
+                    print("Cpf",self.coord.getCpf())
+                    print("Senha",self.coord.getSenha())
+                    print("Email:",self.coord.getEmail())
+                    print("Telefone",self.coord.getTelefone())
+                    print("Disciplina",self.coord.getCurso())
                     
-                    self.tela_coordenador.loga_coordenador(coord)
+                    self.tela_coordenador.loga_coordenador(self.coord)
+                    self.tela_alterar_email.getPessoa(self.coord)
+                    self.tela_alterar_telefone.getPessoa(self.coord)
+                    self.tela_alterar_senha.getPessoa(self.coord)
+                    
+                                        
                     self.QtStack.setCurrentIndex(2)
                 else:
                     QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
@@ -250,25 +258,32 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     dados = c1.client_socket.recv(2048).decode()
                     lista = dados.split(",")
                     print("A lista",lista)
-                    prof = professor(None,None,None,None,None,None,None)
-                    prof.setTelefone(lista[5])
-                    prof.setCpf(lista[2])
-                    prof.setSiape(int(lista[1]))
-                    prof.setNome(lista[0])
-                    prof.setDisciplina(lista[6])
-                    prof.setEmail(lista[4])
-                    prof.setSenha(lista[3])
-                    print("Nome",prof.getNome())
-                    print("Siape",prof.getSIAPE())
-                    print("Cpf",prof.getCpf())
-                    print("Senha",prof.getSenha())
-                    print("Email:",prof.getEmail())
-                    print("Telefone",prof.getTelefone())
-                    print("Disciplina",prof.getDisciplina())
+                    self.prof = professor(None,None,None,None,None,None,None)
+                    self.prof.setTelefone(lista[5])
+                    self.prof.setCpf(lista[2])
+                    self.prof.setSiape(int(lista[1]))
+                    self.prof.setNome(lista[0])
+                    self.prof.setDisciplina(lista[6])
+                    self.prof.setEmail(lista[4])
+                    self.prof.setSenha(lista[3])
+                    print("Nome",self.prof.getNome())
+                    print("Siape",self.prof.getSIAPE())
+                    print("Cpf",self.prof.getCpf())
+                    print("Senha",self.prof.getSenha())
+                    print("Email:",self.prof.getEmail())
+                    print("Telefone",self.prof.getTelefone())
+                    print("Disciplina",self.prof.getDisciplina())
+
+                    self.tela_professor.loga_professor(self.prof)
                     
-                    self.tela_professor.loga_professor(prof)
+                    self.tela_alterar_email.getPessoa(self.prof)
+                    self.tela_alterar_telefone.getPessoa(self.prof)
+                    self.tela_alterar_senha.getPessoa(self.prof)
+                    
+                    
+                    
                     self.QtStack.setCurrentIndex(3)
-            
+                    
                 else:
                     QtWidgets.QMessageBox.about(None, "AVISO","SENHA OU EMAIL INVALIDOS",)
              else:
@@ -285,24 +300,29 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     dados = c1.client_socket.recv(2048).decode()
                     lista = dados.split(",")
                     print("A lista",lista)
-                    monit = monitor(None,None,None,None,None,None,None,None)
-                    monit.setTelefone(lista[5])
-                    monit.setCpf(lista[2])
-                    monit.setMatricula(int(lista[1]))
-                    monit.setNome(lista[0])
-                    monit.setDisciplina(lista[6])
-                    monit.setEmail(lista[4])
-                    monit.setSenha(lista[3])
-                    print("Nome",monit.getNome())
-                    print("Matricula",monit.getMatricula())
-                    print("Cpf",monit.getCpf())
-                    print("Senha",monit.getSenha())
-                    print("Email:",monit.getEmail())
-                    print("Telefone",monit.getTelefone())
-                    print("Disciplina",monit.getDisciplina())
+                    self.monit = monitor(None,None,None,None,None,None,None,None)
+                    self.monit.setTelefone(lista[5])
+                    self.monit.setCpf(lista[2])
+                    self.monit.setMatricula(int(lista[1]))
+                    self.monit.setNome(lista[0])
+                    self.monit.setDisciplina(lista[6])
+                    self.monit.setEmail(lista[4])
+                    self.monit.setSenha(lista[3])
+                    print("Nome",self.monit.getNome())
+                    print("Matricula",self.monit.getMatricula())
+                    print("Cpf",self.monit.getCpf())
+                    print("Senha",self.monit.getSenha())
+                    print("Email:",self.monit.getEmail())
+                    print("Telefone",self.monit.getTelefone())
+                    print("Disciplina",self.monit.getDisciplina())
+
+                    self.tela_alterar_email.getPessoa(self.monit)
+                    self.tela_alterar_telefone.getPessoa(self.monit)
+                    self.tela_alterar_senha.getPessoa(self.monit)
                     
-                    self.tela_monitor.loga_monitor(monit)
                     
+                    
+                    self.tela_monitor.loga_monitor(self.monit)
                     self.QtStack.setCurrentIndex(4)
             
                 else:
@@ -319,18 +339,23 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     dados = c1.client_socket.recv(2048).decode()
                     lista = dados.split(",")
                     print("A lista",lista)
-                    tec = tecnico(None,None,None,None,None)
-                    tec.setTelefone(lista[3])
-                    tec.setCpf(lista[1])
-                    tec.setNome(lista[0])
-                    tec.setEmail(lista[2])
-                    tec.setSenha(lista[4])
-                    print("Nome",tec.getNome())
-                    print("Cpf",tec.getCpf())
-                    print("Senha",tec.getSenha())
-                    print("Email:",tec.getEmail())
-                    print("Telefone",tec.getTelefone())
-                    self.tela_tecnico.loga_tecnico(tec)
+                    self.tec = tecnico(None,None,None,None,None)
+                    self.tec.setTelefone(lista[3])
+                    self.tec.setCpf(lista[1])
+                    self.tec.setNome(lista[0])
+                    self.tec.setEmail(lista[2])
+                    self.tec.setSenha(lista[4])
+                    print("Nome",self.tec.getNome())
+                    print("Cpf",self.tec.getCpf())
+                    print("Senha",self.tec.getSenha())
+                    print("Email:",self.tec.getEmail())
+                    print("Telefone",self.tec.getTelefone())
+                    self.tela_tecnico.loga_tecnico(self.tec)
+
+                    self.tela_alterar_email.getPessoa(self.tec)
+                    self.tela_alterar_telefone.getPessoa(self.tec)
+                    self.tela_alterar_senha.getPessoa(self.tec)
+                    
                     self.QtStack.setCurrentIndex(5)
             
                 else:
@@ -343,11 +368,15 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
     def redefinir_senha(self):
         self.QtStack.setCurrentIndex(9)
         
+        
     def cancelar(self):
+    
         self.QtStack.setCurrentIndex(1)
-
+        
+        
     def alterar_email(self):
         self.QtStack.setCurrentIndex(6)
+        
 
     def alterar_telefone(self):
         self.QtStack.setCurrentIndex(7)
@@ -359,6 +388,86 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         
     def sair(self):
         sys.exit(app.exec_())
+
+
+    def alterar_email_tela(self):
+        email = self.tela_alterar_email.lineEdit.text()
+        email2 = self.tela_alterar_email.lineEdit_2.text()
+        if(verificaEmail(email)):
+            if(email==email2):
+                string = ''
+            
+                if(type(self.tela_alterar_email.pessoa) is coordenador):
+                    string = "altera_email"+","+"c"+","+email+","+self.tela_alterar_email.pessoa.getEmail()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.coord.setEmail(email)
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                        QtWidgets.QMessageBox.information(None, "AVISO","Email redefinido com sucesso!",)
+                        self.tela_alterar_email.lineEdit.clear()
+                        self.tela_alterar_email.lineEdit_2.clear()
+                        self.tela_alterar_email.getPessoa(self.coord)
+                        
+                        
+                        print("Teste",self.tela_alterar_email.pessoa.getEmail())
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este email ja está cadastrado!",)
+                        
+                if(type(self.tela_alterar_email.pessoa) is monitor):
+                    string = "altera_email"+","+"m"+","+email+","+self.tela_alterar_email.pessoa.getEmail()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.monit.setEmail(email)
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                        QtWidgets.QMessageBox.information(None, "AVISO","Email redefinido com sucesso!",)
+                        self.tela_alterar_email.lineEdit.clear()
+                        self.tela_alterar_email.lineEdit_2.clear()
+                        self.tela_alterar_email.getPessoa(self.monit)
+                        
+                        
+                        print("Teste",self.tela_alterar_email.pessoa.getEmail())
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este email ja está cadastrado!",)
+                if(type(self.tela_alterar_email.pessoa) is professor):
+                    string = "altera_email"+","+"p"+","+email+","+self.tela_alterar_email.pessoa.getEmail()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.prof.setEmail(email)
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                        QtWidgets.QMessageBox.information(None, "AVISO","Email redefinido com sucesso!",)
+                        self.tela_alterar_email.lineEdit.clear()
+                        self.tela_alterar_email.lineEdit_2.clear()
+                        self.tela_alterar_email.getPessoa(self.prof)
+                        
+                        
+                        print("Teste",self.tela_alterar_email.pessoa.getEmail())
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este email ja está cadastrado!",)
+                if(type(self.tela_alterar_email.pessoa) is tecnico):
+                    string = "altera_email"+","+"t"+","+email+","+self.tela_alterar_email.pessoa.getEmail()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.tec.setEmail(email)
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                        QtWidgets.QMessageBox.information(None, "AVISO","Email redefinido com sucesso!",)
+                        self.tela_alterar_email.lineEdit.clear()
+                        self.tela_alterar_email.lineEdit_2.clear()
+                        self.tela_alterar_email.getPessoa(self.tec)
+                        
+                        
+                        print("Teste",self.tela_alterar_email.pessoa.getEmail())
+                        self.tela_login.CampoEmail.setText(self.tela_alterar_email.pessoa.getEmail())
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este email ja está cadastrado!",)
+
+                
+            else:
+               QtWidgets.QMessageBox.warning(None, "AVISO","CONFIRME O NOVO EMAIL EM AMBOS OS CAMPOS",)  
+        else:
+           QtWidgets.QMessageBox.warning(None, "AVISO","EMAIL INVÁLIDO DIGITADO!",) 
         
             
 if __name__ == "__main__":

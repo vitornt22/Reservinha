@@ -12,6 +12,7 @@ from verificaEmail import verificaEmail,verificaCpf,verificaTelefone,verificaMat
 class Ui_MenuCoordenador(object):
     def setupUi(self, MenuCoordenador):
         self.coordenador = None
+        self.r_message = False
         MenuCoordenador.setObjectName("MenuCoordenador")
         MenuCoordenador.setEnabled(True)
         MenuCoordenador.resize(711, 488)
@@ -561,9 +562,12 @@ class Ui_MenuCoordenador(object):
 
     def Cancelar(self):
         pass
+    
     def loga_coordenador(self,coordenador):
         self.coordenador = coordenador
-        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo coordenador: "+self.coordenador.getNome(),)
+        if(not self.r_message):
+            QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo coordenador: "+self.coordenador.getNome(),)
+            self.r_message = True
         self.mostrar()
 
 if __name__ == "__main__":

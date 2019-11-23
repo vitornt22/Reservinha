@@ -12,6 +12,7 @@ from cliente import cliente
 class Ui_MenuTecnico(object):
     def setupUi(self, MainWindow):
         self.tecnico = None
+        self.r_message = False
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(711, 429)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -392,7 +393,9 @@ class Ui_MenuTecnico(object):
         print("Telefone",self.tecnico.getTelefone())
     def loga_tecnico(self,tec):
         self.tecnico = tec
-        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo tecnico: "+self.tecnico.getNome(),)
+        if(not self.r_message):
+            QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo tecnico: "+self.tecnico.getNome(),)
+            self.r_message = True
         self.mostrar1()
 
 

@@ -22,7 +22,41 @@ class ClientThread(threading.Thread):
        
         string = recebe.decode()
         lista = string.split(',')
-        
+
+        if(lista[0]=="altera_email"):
+            
+            if(lista[1]=='c'):
+                if(verifica_email(lista[2])):
+                   self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Coordenadores SET Email = ? WHERE Email = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                    
+            if(lista[1]=='p'):
+                if(verifica_email(lista[2])):
+                   self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Professores SET Email = ? WHERE Email = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+
+            if(lista[1]=='t'):
+                if(verifica_email(lista[2])):
+                   self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Tecnicos SET Email = ? WHERE Email = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+            if(lista[1]=='m'):
+                if(verifica_email(lista[2])):
+                   self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Monitores SET Email = ? WHERE Email = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                    
+                
         if lista[0]=='p':
             msg = ''
             

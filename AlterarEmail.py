@@ -7,6 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from cliente import cliente
+from verificaEmail import verificaEmail
+from valida_dados import verifica_email
+from tecnico import tecnico
+from monitor import monitor
+from professor import professor
+from coordenador import coordenador
 
 class Ui_AlterarEMAIL(object):
     def setupUi(self, AlterarEMAIL):
@@ -109,10 +116,14 @@ class Ui_AlterarEMAIL(object):
         self.Remover_2.setText(_translate("AlterarEMAIL", "Cancelar"))
         self.label_3.setText(_translate("AlterarEMAIL", "ALTERAR EMAIL"))
         self.label.setText(_translate("AlterarEMAIL", "NOVO EMAIL "))
-
+        
 
     def getPessoa(self,pessoa):
         self.pessoa = pessoa
+
+    
+            
+        
 
 if __name__ == "__main__":
     import sys

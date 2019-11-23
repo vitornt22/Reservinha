@@ -12,6 +12,7 @@ from verificaEmail import verificaEmail,verificaCpf,verificaTelefone,verificaMat
 class Ui_MenuMonitor(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
+        self.r_message = False
         MainWindow.setEnabled(True)
         MainWindow.resize(732, 482)
         MainWindow.setAutoFillBackground(False)
@@ -334,7 +335,9 @@ class Ui_MenuMonitor(object):
         
     def loga_monitor(self,monitor1):
         self.monitor = monitor1
-        QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo monitor: "+self.monitor.getNome(),)
+        if(not self.r_message):
+            QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo monitor: "+self.monitor.getNome(),)
+            self.r_message = True
         self.mostrar()
 
 if __name__ == "__main__":
