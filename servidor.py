@@ -22,7 +22,44 @@ class ClientThread(threading.Thread):
        
         string = recebe.decode()
         lista = string.split(',')
+        if(lista[0]=="altera_senha"):
+            
+            if(lista[1]=='c'):
+                if(verifica_senha(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Coordenadores set Senha = ? WHERE Senha = ?",(md5(lista[2].encode('utf-8')).hexdigest(),md5(lista[3].encode('utf-8')).hexdigest()))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                    
+            if(lista[1]=='p'):
+                if(verifica_senha(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Professores set Senha = ? WHERE Senha = ?",(md5(lista[2].encode('utf-8')).hexdigest(),md5(lista[3].encode('utf-8')).hexdigest()))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
 
+            if(lista[1]=='m'):
+                if(verifica_senha(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Monitores set Senha = ? WHERE Senha = ?",(md5(lista[2].encode('utf-8')).hexdigest(),md5(lista[3].encode('utf-8')).hexdigest()))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                    
+            if(lista[1]=='t'):
+                if(verifica_senha(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Tecnicos set Senha = ? WHERE Senha = ?",(md5(lista[2].encode('utf-8')).hexdigest(),md5(lista[3].encode('utf-8')).hexdigest()))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+
+
+                    
+                    
+                
         if(lista[0]=="altera_email"):
             
             if(lista[1]=='c'):

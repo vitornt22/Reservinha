@@ -35,6 +35,7 @@ class Ui_RedefinirSenha(object):
         self.Cofnirmar.setObjectName("Cofnirmar")
         self.Agrupamento2.addWidget(self.Cofnirmar)
         self.CampoConfirmar = QtWidgets.QLineEdit(self.layoutWidget)
+        self.CampoConfirmar.setEchoMode(QtWidgets.QLineEdit.Password)
         self.CampoConfirmar.setStyleSheet("QLineEdit{\n"
 "    background-color: white;\n"
 "}")
@@ -63,6 +64,8 @@ class Ui_RedefinirSenha(object):
         self.NovaSenha.setObjectName("NovaSenha")
         self.Agrupamento1.addWidget(self.NovaSenha)
         self.CampoNovaSenha = QtWidgets.QLineEdit(self.layoutWidget1)
+        self.CampoNovaSenha.setEchoMode(QtWidgets.QLineEdit.Password)
+        
         self.CampoNovaSenha.setStyleSheet("QLineEdit{\n"
 "    background-color: white;\n"
 "}")
@@ -91,6 +94,7 @@ class Ui_RedefinirSenha(object):
         self.SenhaAntiga.setObjectName("SenhaAntiga")
         self.agrupamento3.addWidget(self.SenhaAntiga)
         self.CampoSenhaAntiga = QtWidgets.QLineEdit(self.layoutWidget_2)
+        self.CampoSenhaAntiga.setEchoMode(QtWidgets.QLineEdit.Password)
         self.CampoSenhaAntiga.setStyleSheet("QLineEdit{\n"
 "    background-color: white;\n"
 "}")

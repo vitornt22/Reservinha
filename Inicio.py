@@ -168,7 +168,7 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         
         self.tela_alterar_telefone.Cancelar.clicked.connect(self.logando)
         self.tela_alterar_senha.Cancelar.clicked.connect(self.logando)
-        
+        self.tela_alterar_senha.Redefinir.clicked.connect(self.alterar_senha_tela)
         self.tela_monitor.EmailBotao.clicked.connect(self.alterar_email)
         self.tela_coordenador.SenhaBotao_2.clicked.connect(self.alterar_email)
         self.tela_tecnico.SenhaBotao_2.clicked.connect(self.alterar_email)
@@ -468,6 +468,104 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                QtWidgets.QMessageBox.warning(None, "AVISO","CONFIRME O NOVO EMAIL EM AMBOS OS CAMPOS",)  
         else:
            QtWidgets.QMessageBox.warning(None, "AVISO","EMAIL INVÁLIDO DIGITADO!",) 
+
+    def alterar_senha_tela(self):
+        senha_antiga = self.tela_alterar_senha.CampoSenhaAntiga.text()
+        senha_nova = self.tela_alterar_senha.CampoNovaSenha.text()
+        conf = self.tela_alterar_senha.CampoConfirmar.text()
+        mdcomp = md5(senha_antiga.encode('utf-8')).hexdigest()
+        print("A senha antiga",senha_antiga)
+        if(len(senha_antiga)==0 or len(senha_nova) == 0 or len(conf)==0):
+            QtWidgets.QMessageBox.warning(None, "AVISO","PREENCHA TODOS OS CAMPOS!",)
+            
+        else:
+            if(conf==senha_nova):
+                if(type(self.tela_alterar_senha.pessoa) is coordenador):
+                    print("1",mdcomp)
+                    print("2",self.tela_alterar_senha.pessoa.getSenha())
+                    if(mdcomp == self.tela_alterar_senha.pessoa.getSenha()):
+                        string = "altera_senha"+","+"c"+","+senha_nova+","+senha_antiga
+                        c1 = cliente(string)
+                        if(c1.client_socket.recv(1024).decode()=="mudou"):
+                            self.coord.setSenha(md5(senha_nova.encode('utf-8')).hexdigest())
+                            self.tela_login.CampoSenha.setText(senha_nova)
+                            QtWidgets.QMessageBox.information(None, "AVISO","Senha redefinida com sucesso!",)
+                            self.tela_alterar_senha.CampoSenhaAntiga.clear()
+                            self.tela_alterar_senha.CampoNovaSenha.clear()
+                            self.tela_alterar_senha.CampoConfirmar.clear()
+                            self.tela_alterar_senha.getPessoa(self.coord)
+                            
+                            
+                        else:
+                            QtWidgets.QMessageBox.warning(None, "AVISO","Esta senha já está cadastrada",)
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","SENHA INCORRETA",)
+                if(type(self.tela_alterar_senha.pessoa) is professor):
+                    
+                    if(mdcomp == self.tela_alterar_senha.pessoa.getSenha()):
+                        string = "altera_senha"+","+"p"+","+senha_nova+","+senha_antiga
+                        c1 = cliente(string)
+                        if(c1.client_socket.recv(1024).decode()=="mudou"):
+                            self.prof.setSenha(md5(senha_nova.encode('utf-8')).hexdigest())
+                            self.tela_login.CampoSenha.setText(senha_nova)
+                            QtWidgets.QMessageBox.information(None, "AVISO","Senha redefinida com sucesso!",)
+                            self.tela_alterar_senha.CampoSenhaAntiga.clear()
+                            self.tela_alterar_senha.CampoNovaSenha.clear()
+                            self.tela_alterar_senha.CampoConfirmar.clear()
+                            self.tela_alterar_senha.getPessoa(self.prof)
+                            
+                            
+                        else:
+                            QtWidgets.QMessageBox.warning(None, "AVISO","Esta senha já está cadastrada",)
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","SENHA INCORRETA",)
+
+                if(type(self.tela_alterar_senha.pessoa) is monitor):
+                    
+                    if(mdcomp == self.tela_alterar_senha.pessoa.getSenha()):
+                        string = "altera_senha"+","+"m"+","+senha_nova+","+senha_antiga
+                        c1 = cliente(string)
+                        if(c1.client_socket.recv(1024).decode()=="mudou"):
+                            self.monit.setSenha(md5(senha_nova.encode('utf-8')).hexdigest())
+                            self.tela_login.CampoSenha.setText(senha_nova)
+                            QtWidgets.QMessageBox.information(None, "AVISO","Senha redefinida com sucesso!",)
+                            self.tela_alterar_senha.CampoSenhaAntiga.clear()
+                            self.tela_alterar_senha.CampoNovaSenha.clear()
+                            self.tela_alterar_senha.CampoConfirmar.clear()
+                            self.tela_alterar_senha.getPessoa(self.monit)
+                            
+                            
+                        else:
+                            QtWidgets.QMessageBox.warning(None, "AVISO","Esta senha já está cadastrada",)
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","SENHA INCORRETA",)
+
+                if(type(self.tela_alterar_senha.pessoa) is tecnico):
+                    
+                    if(mdcomp == self.tela_alterar_senha.pessoa.getSenha()):
+                        string = "altera_senha"+","+"t"+","+senha_nova+","+senha_antiga
+                        c1 = cliente(string)
+                        if(c1.client_socket.recv(1024).decode()=="mudou"):
+                            self.tec.setSenha(md5(senha_nova.encode('utf-8')).hexdigest())
+                            self.tela_login.CampoSenha.setText(senha_nova)
+                            QtWidgets.QMessageBox.information(None, "AVISO","Senha redefinida com sucesso!",)
+                            self.tela_alterar_senha.CampoSenhaAntiga.clear()
+                            self.tela_alterar_senha.CampoNovaSenha.clear()
+                            self.tela_alterar_senha.CampoConfirmar.clear()
+                            self.tela_alterar_senha.getPessoa(self.tec)
+                            
+                            
+                        else:
+                            QtWidgets.QMessageBox.warning(None, "AVISO","Esta senha já está cadastrada",)
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","SENHA INCORRETA",)
+
+                
+                    
+            else:
+               QtWidgets.QMessageBox.warning(None, "AVISO","CONFIRME A NOVA SENHA DE MANEIRA CORRETA!",) 
+        
+             
         
             
 if __name__ == "__main__":
