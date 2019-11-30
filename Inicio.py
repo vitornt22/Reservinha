@@ -23,7 +23,7 @@ from tecnico import tecnico
 from monitor import monitor
 from professor import professor
 from coordenador import coordenador
-from verificaEmail import verificaEmail
+from verificaEmail import verificaEmail,verificaTelefone
 from valida_dados import verifica_email
 import sys
 
@@ -188,7 +188,8 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
         self.tela_login.EsqueceuSenha.clicked.connect(self.redefinir_senha)
 
         self.tela_esq_senha.codigo.clicked.connect(self.cancelar)
-
+        
+        self.tela_alterar_telefone.Alterar.clicked.connect(self.alterar_telefone_tela)
         
     def entrar_coord(self):
         self.QtStack.setCurrentIndex(1)
@@ -389,7 +390,86 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
     def sair(self):
         sys.exit(app.exec_())
 
+    def alterar_telefone_tela(self):
+        telefone = self.tela_alterar_telefone.CampoTelefone.text()
+        if(verificaTelefone(telefone)):
+            string = ''
+            if(type(self.tela_alterar_telefone.pessoa) is coordenador):
+                    string = "altera_telefone"+","+"c"+","+telefone+","+self.tela_alterar_telefone.pessoa.getTelefone()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.coord.setTelefone(telefone)
+                        
+                        QtWidgets.QMessageBox.information(None, "AVISO","Telefone redefinido com sucesso!",)
+                        self.tela_alterar_telefone.CampoTelefone.clear()
+                        
+                        self.tela_alterar_telefone.getPessoa(self.coord)
+                        
+                        
+                        print("Teste",self.tela_alterar_telefone.pessoa.getTelefone())
+                        
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este número ja está cadastrado!",)
+                        
+            if(type(self.tela_alterar_telefone.pessoa) is monitor):
+                    string = "altera_telefone"+","+"m"+","+telefone+","+self.tela_alterar_telefone.pessoa.getTelefone()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.monit.setTelefone(telefone)
+                        
+                        QtWidgets.QMessageBox.information(None, "AVISO","Telefone redefinido com sucesso!",)
+                        self.tela_alterar_telefone.CampoTelefone.clear()
+                        
+                        self.tela_alterar_telefone.getPessoa(self.monit)
+                        
+                        
+                        print("Teste",self.tela_alterar_telefone.pessoa.getTelefone())
+                        
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este número ja está cadastrado!",)
+                        
+            if(type(self.tela_alterar_telefone.pessoa) is professor):
+                    string = "altera_telefone"+","+"p"+","+telefone+","+self.tela_alterar_telefone.pessoa.getTelefone()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.prof.setTelefone(telefone)
+                        
+                        QtWidgets.QMessageBox.information(None, "AVISO","Telefone redefinido com sucesso!",)
+                        self.tela_alterar_telefone.CampoTelefone.clear()
+                        
+                        self.tela_alterar_telefone.getPessoa(self.prof)
+                        
+                        
+                        print("Teste",self.tela_alterar_telefone.pessoa.getTelefone())
+                        
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este número ja está cadastrado!",)
 
+
+            if(type(self.tela_alterar_telefone.pessoa) is tecnico):
+                    string = "altera_telefone"+","+"t"+","+telefone+","+self.tela_alterar_telefone.pessoa.getTelefone()
+                    c1 = cliente(string)
+                    if(c1.client_socket.recv(1024).decode()=="mudou"):
+                        self.tec.setTelefone(telefone)
+                        
+                        QtWidgets.QMessageBox.information(None, "AVISO","Telefone redefinido com sucesso!",)
+                        self.tela_alterar_telefone.CampoTelefone.clear()
+                        
+                        self.tela_alterar_telefone.getPessoa(self.tec)
+                        
+                        
+                        print("Teste",self.tela_alterar_telefone.pessoa.getTelefone())
+                        
+                    else:
+                        QtWidgets.QMessageBox.warning(None, "AVISO","Este número ja está cadastrado!",)
+
+
+
+                        
+
+        else:
+            QtWidgets.QMessageBox.warning(None, "AVISO","TELEFONE INVÁLIDO DIGITADO!",)
+            
     def alterar_email_tela(self):
         email = self.tela_alterar_email.lineEdit.text()
         email2 = self.tela_alterar_email.lineEdit_2.text()

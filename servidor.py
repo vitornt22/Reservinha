@@ -22,6 +22,39 @@ class ClientThread(threading.Thread):
        
         string = recebe.decode()
         lista = string.split(',')
+        if(lista[0]=="altera_telefone"):
+            if(lista[1]=='c'):
+                if(verifica_telefone(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Coordenadores set Telefone = ? WHERE Telefone = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                        
+            if(lista[1]=='p'):
+                if(verifica_telefone(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Professores set Telefone = ? WHERE Telefone = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+
+            if(lista[1]=='m'):
+                if(verifica_telefone(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Monitores set Telefone = ? WHERE Telefone = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                        
+            if(lista[1]=='t'):
+                if(verifica_telefone(lista[2])):
+                    self.csocket.send("existe".encode())
+                else:
+                    cursor.execute("UPDATE Tecnicos set Telefone = ? WHERE Telefone = ?",(lista[2],lista[3]))
+                    conexao.commit()
+                    self.csocket.send("mudou".encode())
+                
         if(lista[0]=="altera_senha"):
             
             if(lista[1]=='c'):
