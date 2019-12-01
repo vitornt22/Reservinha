@@ -22,6 +22,36 @@ class ClientThread(threading.Thread):
        
         string = recebe.decode()
         lista = string.split(',')
+
+        if(lista[0]=="reservar"):
+            print("Lista",lista)
+            cont = 0
+            cons = cursor.execute("SELECT Numero,Situacao from Salas WHERE (Bloco = ? and Numero = ? AND Situacao = ? AND Dia = ? AND Horario=?)",(lista[2],lista[3],"Livre",lista[4],lista[5]))
+            for i in cons.fetchall():
+                print("a", i)
+                cont+=1
+
+            print("O cont",cont)
+
+            if(cont==0):
+                self.csocket.send("ocupado".encode())
+            else:
+                cursor.execute("UPDATE Salas set Situacao = ? WHERE (Numero = ? AND Dia = ? AND Horario = ?)",("Ocupado",lista[3],lista[4],lista[5]))
+                conexao.commit()
+                cursor.execute("INSERT into Reservas VALUES(?,?,?,?)",(lista[3],lista[5],lista[1],lista[4]))
+                conexao.commit()              
+                self.csocket.send("certo".encode())
+                
+        if(lista[0]=="Listar"):
+            
+            str2 =''
+            cons = cursor.execute("SELECT * from Salas WHERE Numero = ?",(lista[2],))
+           
+            for i in cons.fetchall():
+                str2 +=i[2]+","
+            print(str2)
+            self.csocket.send(str2.encode())
+          
         if(lista[0]=="altera_telefone"):
             if(lista[1]=='c'):
                 if(verifica_telefone(lista[2])):

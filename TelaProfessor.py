@@ -462,7 +462,7 @@ class Ui_MenuProfessor(object):
 
     def retranslateUi(self, MenuProfessor):
         _translate = QtCore.QCoreApplication.translate
-        MenuProfessor.setWindowTitle(_translate("MenuProfessor", "MENU COORDENADOR"))
+        MenuProfessor.setWindowTitle(_translate("MenuProfessor", "MENU PROFESSOR"))
         self.Cpf.setText(_translate("MenuProfessor", "CPF               "))
         self.Email.setText(_translate("MenuProfessor", "EMAIL          "))
         self.Siape.setText(_translate("MenuProfessor", "MATRICULA"))
@@ -520,11 +520,13 @@ class Ui_MenuProfessor(object):
         self.SenhaBotao_3.setText(_translate("MenuProfessor", "TELEFONE"))
         self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.tab), _translate("MenuProfessor", "Alterar Dados"))
         self.funcionalidade()
-
+        
 
     def funcionalidade(self):
         self.Cadastrar.clicked.connect(self.cadastrar)
         self.cancelar.clicked.connect(self.Cancelar)
+        self.Listar.clicked.connect(self.listar_salas)
+        self.Reservar.clicked.connect(self.reservar)
         
     def mostrar(self):
         print("Nome",self.professor.getNome())
@@ -564,13 +566,55 @@ class Ui_MenuProfessor(object):
 
     def Cancelar(self):
         pass
+    
     def loga_professor(self,professor1):
         self.professor = professor1
         if(not self.r_message):
             QtWidgets.QMessageBox.information(None, "AVISO","Bem vindo professor: "+self.professor.getNome(),)
             self.r_message = True
         self.mostrar()
+        
+    def listar_salas(self):
+        #self.CampoDIa.setText("vitor burro") campo do dia
+        #self.CampoBloco.setText("lixo") bloco
+        #self.CampoSala.setText("819") sala
+        #self.CampoHorario.setText("2") horario
+        string = ''
+        erros = ''
+        if((len(self.CampoBloco.text())==0) or (len(self.CampoSala.text())==0)):
+            QtWidgets.QMessageBox.warning(None, "AVISO","PREENCHA CAMPOS BLOCO E SALA PARA PODER VER A TABELA DE RESERVAS",)
+        else:
+            
+            if(len(erros)>0):
+               QtWidgets.QMessageBox.warning(None, "AVISO","Dados inválidos nos seguintes campos: "+erros,)
+            else:
+                string = "Listar"+","+self.CampoBloco.text()+","+self.CampoSala.text()
+                c1 = cliente(string)
+                str2 = c1.client_socket.recv(1024).decode()
+                lista = str2.split(",")
+                lista.pop(len(lista)-1)
+                
+                c = 0
+    
+                for j in range(6):
+                    for i in range(7):
+                        self.tabela.setItem(i,j, QtWidgets.QTableWidgetItem(lista[c]))
+                        c+=1
 
+
+    def reservar(self):
+        string = ''
+        if((len(self.CampoBloco.text())==0) or (len(self.CampoSala.text())==0) or (len(self.CampoHorario_3.text())==0) or len(self.CampoDIa.text())==0):
+            QtWidgets.QMessageBox.warning(None, "AVISO","PREENCHA TODOS OS CAMPOS PARA RESERVAR UMA SALA",)
+        else:
+            string = "reservar"+","+self.professor.getCpf()+","+self.CampoBloco.text()+","+self.CampoSala.text()+","+self.CampoDIa.text()+","+self.CampoHorario_3.text()
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+            print("String2",string2)
+            if(string2=="certo"):
+                QtWidgets.QMessageBox.information(None, "AVISO","Reserva efetuada com sucesso",)
+            else:
+               QtWidgets.QMessageBox.warning(None, "AVISO","Não foi possível realizar a reserva!",) 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

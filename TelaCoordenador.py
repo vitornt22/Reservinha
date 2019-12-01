@@ -9,6 +9,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from cliente import cliente
 from verificaEmail import verificaEmail,verificaCpf,verificaTelefone,verificaMat
+from valida_dados import verifica_horario,verifica_dia
+
 class Ui_MenuCoordenador(object):
     def setupUi(self, MenuCoordenador):
         self.coordenador = None
@@ -528,10 +530,19 @@ class Ui_MenuCoordenador(object):
         print("Email:",self.coordenador.getEmail())
         print("Telefone",self.coordenador.getTelefone())
         print("Disciplina",self.coordenador.getCurso())
+        #self.CampoSala_2.setText("Testando")#Esse lixo pertence ao cancelar
+        #self.CampoDia.setText("lixo")#Esse tambem
+        #self.CampoBloco_2.setText("teste") esse tambem
+        
     def funcionalidade(self):
         self.Cadastrar.clicked.connect(self.cadastrar)
         self.cancelar.clicked.connect(self.Cancelar)
-    
+        self.SenhaBotao_2.clicked.connect(self.print)
+        self.Listar.clicked.connect(self.listar_salas)
+        self.Reservar.clicked.connect(self.reservar)
+    def print(self):
+        print("Vitor é burro")
+        
     def cadastrar(self):
         nome=self.CampoNome.text()
         siape= self.CampoSiape.text()
@@ -570,6 +581,50 @@ class Ui_MenuCoordenador(object):
             self.r_message = True
         self.mostrar()
 
+
+    def listar_salas(self):
+        #self.CampoDIa.setText("vitor burro") campo do dia
+        #self.CampoBloco.setText("lixo") bloco
+        #self.CampoSala.setText("819") sala
+        #self.CampoHorario.setText("2") horario
+        string = ''
+        erros = ''
+        if((len(self.CampoBloco.text())==0) or (len(self.CampoSala.text())==0)):
+            QtWidgets.QMessageBox.warning(None, "AVISO","PREENCHA CAMPOS BLOCO E SALA PARA PODER VER A TABELA DE RESERVAS",)
+        else:
+            
+            if(len(erros)>0):
+               QtWidgets.QMessageBox.warning(None, "AVISO","Dados inválidos nos seguintes campos: "+erros,)
+            else:
+                string = "Listar"+","+self.CampoBloco.text()+","+self.CampoSala.text()
+                c1 = cliente(string)
+                str2 = c1.client_socket.recv(1024).decode()
+                lista = str2.split(",")
+                lista.pop(len(lista)-1)
+                
+                c = 0
+    
+                for j in range(6):
+                    for i in range(7):
+                        self.tabela.setItem(i,j, QtWidgets.QTableWidgetItem(lista[c]))
+                        c+=1
+
+
+    def reservar(self):
+        string = ''
+        if((len(self.CampoBloco.text())==0) or (len(self.CampoSala.text())==0) or (len(self.CampoHorario.text())==0) or len(self.CampoDIa.text())==0):
+            QtWidgets.QMessageBox.warning(None, "AVISO","PREENCHA TODOS OS CAMPOS PARA RESERVAR UMA SALA",)
+        else:
+            string = "reservar"+","+self.coordenador.getCpf()+","+self.CampoBloco.text()+","+self.CampoSala.text()+","+self.CampoDIa.text()+","+self.CampoHorario.text()
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+            print("String2",string2)
+            if(string2=="certo"):
+                QtWidgets.QMessageBox.information(None, "AVISO","Reserva efetuada com sucesso",)
+            else:
+               QtWidgets.QMessageBox.warning(None, "AVISO","Não foi possível realizar a reserva!",) 
+           
+    
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

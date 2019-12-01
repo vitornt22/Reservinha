@@ -181,6 +181,17 @@ def verifica_telefone(telefone):
     conexao.close()
 
 
+def verifica_horario(hora):
+    if((hora!="8") and (hora!="10") and (hora!="12") and (hora!="14") and (hora!="16") and (hora!="18") and (hora!="20")):
+        return 1
+    else:
+        return 0
+
+def verifica_dia(dia):
+    if(dia!="Segunda" and dia!="Terça" and dia !="Quarta" and dia!="Quinta" and dia!="Sexta" and dia!="Sabado"):
+        return 1
+    else:
+        return 0
 
 
 
