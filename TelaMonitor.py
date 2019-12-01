@@ -329,7 +329,8 @@ class Ui_MenuMonitor(object):
     def funcionalidade(self):
         self.Listar.clicked.connect(self.listar_salas)
         self.Reservar.clicked.connect(self.reservar)
-        
+        self.Mostrar.clicked.connect(self.mostrar_reservas)
+         
     def mostrar(self):
         print("Nome",self.monitor.getNome())
         print("Siape",self.monitor.getMatricula())
@@ -362,15 +363,18 @@ class Ui_MenuMonitor(object):
                 string = "Listar"+","+self.CampoBloco.text()+","+self.CampoSala.text()
                 c1 = cliente(string)
                 str2 = c1.client_socket.recv(1024).decode()
-                lista = str2.split(",")
-                lista.pop(len(lista)-1)
+                if(str2=="vazio"):
+                    QtWidgets.QMessageBox.warning(None, "AVISO","Bloco ou Sala não cadastrados",)
+                else:
+                    lista = str2.split(",")
+                    lista.pop(len(lista)-1)
                 
-                c = 0
+                    c = 0
     
-                for j in range(6):
-                    for i in range(7):
-                        self.tabela.setItem(i,j, QtWidgets.QTableWidgetItem(lista[c]))
-                        c+=1
+                    for j in range(6):
+                        for i in range(7):
+                            self.tabela.setItem(i,j, QtWidgets.QTableWidgetItem(lista[c]))
+                            c+=1
 
 
     def reservar(self):
@@ -386,6 +390,29 @@ class Ui_MenuMonitor(object):
                 QtWidgets.QMessageBox.information(None, "AVISO","Reserva efetuada com sucesso",)
             else:
                QtWidgets.QMessageBox.warning(None, "AVISO","Não foi possível realizar a reserva!",) 
+
+    def mostrar_reservas(self):
+        string = 'mostrar'+","+self.monitor.getCpf()
+        c1 = cliente(string)
+        string2 = c1.client_socket.recv(1024).decode()
+        lista = []
+        self.listWidget.clear()
+        if("recebido" in string2):
+            string2 = c1.client_socket.recv(1024).decode()
+            lista = string2.split(",")
+            
+            self.listWidget.addItem("                                                    SALA                       HORARIO                    DIA")
+            print("The lista",lista)
+            lista.pop(len(lista)-1)
+            cont = 0
+            while(cont<len(lista)):
+                
+                self.listWidget.addItem("                                                     "+lista[cont]+"                            "+lista[cont+1]+"                "+lista[cont+2])                                               
+                cont+=3
+        else:
+            QtWidgets.QMessageBox.information(None, "AVISO","Não há reservas realizadas no momento",) 
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

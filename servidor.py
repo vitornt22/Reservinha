@@ -22,7 +22,21 @@ class ClientThread(threading.Thread):
        
         string = recebe.decode()
         lista = string.split(',')
-
+        if(lista[0]=="mostrar"):
+            cont = 0
+            string = ''
+            cons = cursor.execute("SELECT * from Reservas WHERE Cpf = ?",(lista[1],))
+            for i in cons.fetchall():
+                cont+=1
+                string+=str(i[0])+","+str(i[1]) +" as "+ str(int(i[1])+2)+","+str(i[3])+","
+            print("\n string",string)
+            if(cont==0):
+                self.csocket.send("vazio".encode())
+            else:
+                self.csocket.send("recebido".encode())
+                self.csocket.send(string.encode())
+                
+            
         if(lista[0]=="reservar"):
             print("Lista",lista)
             cont = 0
@@ -45,12 +59,16 @@ class ClientThread(threading.Thread):
         if(lista[0]=="Listar"):
             
             str2 =''
-            cons = cursor.execute("SELECT * from Salas WHERE Numero = ?",(lista[2],))
+            cont = 0
+            cons = cursor.execute("SELECT * from Salas WHERE (Bloco=? AND Numero = ?)",(lista[1],lista[2],))
            
             for i in cons.fetchall():
                 str2 +=i[2]+","
-            print(str2)
-            self.csocket.send(str2.encode())
+                cont+=1
+            if(cont==0):
+                self.csocket.send("vazio".encode())
+            else:
+                self.csocket.send(str2.encode())
           
         if(lista[0]=="altera_telefone"):
             if(lista[1]=='c'):
