@@ -4,8 +4,8 @@ from monitor import monitor
 from coordenador import coordenador
 import sqlite3
 from hashlib import md5
-from valida_dados import verifica_senha,verifica_siape,verifica_email,verifica_telefone,verifica_cpf
-
+from valida_dados import conta_reserva,verifica_hora,verifica_senha,verifica_siape,verifica_email,verifica_telefone,verifica_cpf
+from datetime import datetime
 class ClientThread(threading.Thread):
     
     def __init__(self,clientAddress,clientsocket):
@@ -19,9 +19,49 @@ class ClientThread(threading.Thread):
         string = ''
         cursor = conexao.cursor()
        # print ('mensagem recebida: '+ recebe.decode())
-       
+        dias = ["Domingo","Segunda","Terca","Quarta","Quinta","Sexta","Sabado"]
+        hora = datetime.now().hour
+        data = datetime.now().weekday()
+        data+=1
+        if(data == 6):
+            data = 0
         string = recebe.decode()
         lista = string.split(',')
+        if(lista[0]=="solicita"):
+            cont = 0
+            sala = ''
+            print(str(hora))
+            print(data)
+            print(dias[data])
+            cons = cursor.execute("SELECT * from Reservas WHERE (Cpf= ? AND Dia = ? and Horario <= ?)",(lista[1],dias[data],str(hora)))
+            for i in cons.fetchall():
+                cont+=1
+                sala = str(i[0])+","+i[1]
+                
+            if(cont==0):
+                self.csocket.send("invalido".encode())
+            else:
+                self.csocket.send(sala.encode())
+        if(lista[0]=="cancelar_reserva"):
+            if((int(lista[5])+2 <= hora)):
+                cont = conta_reserva(lista[1])
+                if(conta_reserva(lista[1])==0):
+                    self.csocket.send("sem".encode())
+                else:
+                    cont = 0
+                    cons = cursor.execute("SELECT * FROM Reservas WHERE (Cpf = ?  AND Sala = ? AND Dia = ? And Horario = ?)",(lista[1],lista[3],lista[4],lista[5]))
+                    for i in cons.fetchall():
+                        cont+=1
+                    if(cont==0):
+                        self.csocket.send("sem".encode())
+                    else:
+                        cursor.execute("DELETE from Reservas WHERE (Cpf = ?  AND Sala = ? AND Dia = ? And Horario = ?)",(lista[1],lista[3],lista[4],lista[5]))
+                        conexao.commit()
+                        cursor.execute("UPDATE Salas set Situacao = ? WHERE (Numero = ? AND Dia = ? AND Horario = ?)",("Livre",lista[3],lista[4],lista[5]))
+                        conexao.commit()
+                        self.csocket.send("cancelar".encode())
+            
+            
         if(lista[0]=="mostrar"):
             cont = 0
             string = ''
@@ -38,7 +78,7 @@ class ClientThread(threading.Thread):
                 
             
         if(lista[0]=="reservar"):
-            print("Lista",lista)
+            
             cont = 0
             cons = cursor.execute("SELECT Numero,Situacao from Salas WHERE (Bloco = ? and Numero = ? AND Situacao = ? AND Dia = ? AND Horario=?)",(lista[2],lista[3],"Livre",lista[4],lista[5]))
             for i in cons.fetchall():

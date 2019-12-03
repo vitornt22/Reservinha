@@ -7,15 +7,19 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from verificaEmail import verificaEmail,verificaCpf,verificaTelefone,verificaMat
 from cliente import cliente
+from geradordepdf import GeraPDF
+from datetime import datetime
+from enviaemail import envia_email
+
 class Ui_MenuProfessor(object):
     def setupUi(self, MenuProfessor):
-        self.professor = None
-        self.r_message = False
         MenuProfessor.setObjectName("MenuProfessor")
         MenuProfessor.setEnabled(True)
         MenuProfessor.resize(711, 474)
+        self.r_message = False
         MenuProfessor.setAutoFillBackground(False)
         MenuProfessor.setAnimated(True)
         MenuProfessor.setUnifiedTitleAndToolBarOnMac(False)
@@ -367,7 +371,7 @@ class Ui_MenuProfessor(object):
         self.fundo_4.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
         self.fundo_4.setObjectName("fundo_4")
         self.Remover = QtWidgets.QPushButton(self.cancelarreserva)
-        self.Remover.setGeometry(QtCore.QRect(280, 240, 121, 41))
+        self.Remover.setGeometry(QtCore.QRect(280, 270, 121, 41))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -431,6 +435,26 @@ class Ui_MenuProfessor(object):
         self.CampoDia.setObjectName("CampoDia")
         self.subagrupamento3.addWidget(self.CampoDia)
         self.Agrupamento13.addLayout(self.subagrupamento3)
+        self.layoutWidget_10 = QtWidgets.QWidget(self.cancelarreserva)
+        self.layoutWidget_10.setGeometry(QtCore.QRect(170, 220, 321, 31))
+        self.layoutWidget_10.setObjectName("layoutWidget_10")
+        self.subagrupamento3_2 = QtWidgets.QHBoxLayout(self.layoutWidget_10)
+        self.subagrupamento3_2.setContentsMargins(0, 0, 0, 0)
+        self.subagrupamento3_2.setObjectName("subagrupamento3_2")
+        self.horario = QtWidgets.QLabel(self.layoutWidget_10)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.horario.setFont(font)
+        self.horario.setObjectName("horario")
+        self.subagrupamento3_2.addWidget(self.horario)
+        self.CampoHorario_2 = QtWidgets.QLineEdit(self.layoutWidget_10)
+        self.CampoHorario_2.setStyleSheet("QLineEdit{\n"
+"    background-color: white;\n"
+"}")
+        self.CampoHorario_2.setObjectName("CampoHorario_2")
+        self.subagrupamento3_2.addWidget(self.CampoHorario_2)
         self.Tabelageral.addTab(self.cancelarreserva, "")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -451,13 +475,97 @@ class Ui_MenuProfessor(object):
         self.SenhaBotao_3.setGeometry(QtCore.QRect(240, 180, 171, 41))
         self.SenhaBotao_3.setObjectName("SenhaBotao_3")
         self.Tabelageral.addTab(self.tab, "")
+        self.informacoes = QtWidgets.QWidget()
+        self.informacoes.setObjectName("informacoes")
+        self.fundo_6 = QtWidgets.QLabel(self.informacoes)
+        self.fundo_6.setGeometry(QtCore.QRect(-50, -20, 931, 491))
+        self.fundo_6.setText("")
+        self.fundo_6.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
+        self.fundo_6.setObjectName("fundo_6")
+        self.layoutWidget_14 = QtWidgets.QWidget(self.informacoes)
+        self.layoutWidget_14.setGeometry(QtCore.QRect(140, 180, 471, 36))
+        self.layoutWidget_14.setObjectName("layoutWidget_14")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.layoutWidget_14)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.email = QtWidgets.QLabel(self.layoutWidget_14)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.email.setFont(font)
+        self.email.setObjectName("email")
+        self.horizontalLayout_2.addWidget(self.email)
+        self.LabeEmail = QtWidgets.QLabel(self.layoutWidget_14)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabeEmail.setFont(font)
+        self.LabeEmail.setText("")
+        self.LabeEmail.setObjectName("LabeEmail")
+        self.horizontalLayout_2.addWidget(self.LabeEmail)
+        self.layoutWidget_11 = QtWidgets.QWidget(self.informacoes)
+        self.layoutWidget_11.setGeometry(QtCore.QRect(140, 130, 471, 36))
+        self.layoutWidget_11.setObjectName("layoutWidget_11")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.layoutWidget_11)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.Telfone = QtWidgets.QLabel(self.layoutWidget_11)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.Telfone.setFont(font)
+        self.Telfone.setObjectName("Telfone")
+        self.horizontalLayout_3.addWidget(self.Telfone)
+        self.LabelTelefone = QtWidgets.QLabel(self.layoutWidget_11)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelTelefone.setFont(font)
+        self.LabelTelefone.setText("")
+        self.LabelTelefone.setObjectName("LabelTelefone")
+        self.horizontalLayout_3.addWidget(self.LabelTelefone)
+        self.layoutWidget_13 = QtWidgets.QWidget(self.informacoes)
+        self.layoutWidget_13.setGeometry(QtCore.QRect(140, 80, 471, 36))
+        self.layoutWidget_13.setObjectName("layoutWidget_13")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.layoutWidget_13)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.nome = QtWidgets.QLabel(self.layoutWidget_13)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.nome.setFont(font)
+        self.nome.setObjectName("nome")
+        self.horizontalLayout_4.addWidget(self.nome)
+        self.LabelNome = QtWidgets.QLabel(self.layoutWidget_13)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelNome.setFont(font)
+        self.LabelNome.setText("")
+        self.LabelNome.setObjectName("LabelNome")
+        self.horizontalLayout_4.addWidget(self.LabelNome)
+        self.layoutWidget_12 = QtWidgets.QWidget(self.informacoes)
+        self.layoutWidget_12.setGeometry(QtCore.QRect(140, 240, 471, 36))
+        self.layoutWidget_12.setObjectName("layoutWidget_12")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget_12)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.Siape_2 = QtWidgets.QLabel(self.layoutWidget_12)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.Siape_2.setFont(font)
+        self.Siape_2.setObjectName("Siape_2")
+        self.horizontalLayout.addWidget(self.Siape_2)
+        self.LabelSiape = QtWidgets.QLabel(self.layoutWidget_12)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelSiape.setFont(font)
+        self.LabelSiape.setText("")
+        self.LabelSiape.setObjectName("LabelSiape")
+        self.horizontalLayout.addWidget(self.LabelSiape)
+        self.Tabelageral.addTab(self.informacoes, "")
         MenuProfessor.setCentralWidget(self.centralwidget)
         self.rodape = QtWidgets.QStatusBar(MenuProfessor)
         self.rodape.setObjectName("rodape")
         MenuProfessor.setStatusBar(self.rodape)
 
         self.retranslateUi(MenuProfessor)
-        self.Tabelageral.setCurrentIndex(1)
+        self.Tabelageral.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(MenuProfessor)
 
     def retranslateUi(self, MenuProfessor):
@@ -514,28 +622,39 @@ class Ui_MenuProfessor(object):
         self.Bloco_2.setText(_translate("MenuProfessor", "BLOCO"))
         self.Sala_2.setText(_translate("MenuProfessor", "SALA    "))
         self.Dia_2.setText(_translate("MenuProfessor", "DIA      "))
+        self.horario.setText(_translate("MenuProfessor", "HORARIO"))
         self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.cancelarreserva), _translate("MenuProfessor", "Cancelar reserva"))
         self.SenhaBotao.setText(_translate("MenuProfessor", "SENHA"))
         self.SenhaBotao_2.setText(_translate("MenuProfessor", "EMAIL"))
         self.SenhaBotao_3.setText(_translate("MenuProfessor", "TELEFONE"))
         self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.tab), _translate("MenuProfessor", "Alterar Dados"))
+        self.email.setText(_translate("MenuProfessor", "EMAIL"))
+        self.Telfone.setText(_translate("MenuProfessor", "TELEFONE:"))
+        self.nome.setText(_translate("MenuProfessor", "NOME"))
+        self.Siape_2.setText(_translate("MenuProfessor", "SIAPE"))
+        self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.informacoes), _translate("MenuProfessor", "Informações"))
         self.funcionalidade()
         
 
     def funcionalidade(self):
         self.Cadastrar.clicked.connect(self.cadastrar)
-        self.cancelar.clicked.connect(self.Cancelar)
+        self.Remover.clicked.connect(self.cancelar_reserva)
         self.Listar.clicked.connect(self.listar_salas)
         self.Reservar.clicked.connect(self.reservar)
         self.Mostrar.clicked.connect(self.mostrar_reservas)
+        self.gerarPDF.clicked.connect(self.gera_pdf)
     def mostrar(self):
-        print("Nome",self.professor.getNome())
+        self.LabelNome.setText(self.professor.getNome())
+        self.LabelTelefone.setText(self.professor.getTelefone())
+        self.LabeEmail.setText(self.professor.getEmail())
+        self.LabelSiape.setText(str(self.professor.getSIAPE()))
+        """print("Nome",self.professor.getNome())
         print("Siape",self.professor.getSIAPE())
         print("Cpf",self.professor.getCpf())
         print("Senha",self.professor.getSenha())
         print("Email:",self.professor.getEmail())
         print("Telefone",self.professor.getTelefone())
-        print("Disciplina",self.professor.getDisciplina())
+        print("Disciplina",self.professor.getDisciplina())"""
     def cadastrar(self):
         nome=self.CampoNome.text()
         mat= self.CampoSiape.text()
@@ -560,12 +679,10 @@ class Ui_MenuProfessor(object):
                 self.CampoCpf.clear()
                 self.CampoDisciplina.clear()
             else:
-                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2)
+                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2[:len(string2)-1:1])
         else:
             QtWidgets.QMessageBox.about(None, "Alguns Valores invalidos","Preencha os campos com valores validos",)
 
-    def Cancelar(self):
-        pass
     
     def loga_professor(self,professor1):
         self.professor = professor1
@@ -616,6 +733,7 @@ class Ui_MenuProfessor(object):
             print("String2",string2)
             if(string2=="certo"):
                 QtWidgets.QMessageBox.information(None, "AVISO","Reserva efetuada com sucesso",)
+                self.mostrar_reservas()
             else:
                QtWidgets.QMessageBox.warning(None, "AVISO","Não foi possível realizar a reserva!",)
     def mostrar_reservas(self):
@@ -639,7 +757,39 @@ class Ui_MenuProfessor(object):
         else:
             QtWidgets.QMessageBox.information(None, "AVISO","Não há reservas realizadas no momento",) 
     
-                
+    def cancelar_reserva(self):
+        bloco = self.CampoBloco_2.text()
+        sala = self.CampoSala_2.text()
+        dia = self.CampoDia.text()
+        horario = self.CampoHorario_2.text()
+        string = ''
+        if(len(dia)== 0 or len(sala) == 0 or len(bloco)==0 or len(horario)==0):
+            QtWidgets.QMessageBox.information(None, "AVISO","PREENCHA TODOS OS CAMPOS!",)
+        else:
+            string = "cancelar_reserva"+","+self.professor.getCpf()+","+bloco+","+sala+","+dia+","+horario
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+            if(string2=="cancelar"):
+                QtWidgets.QMessageBox.information(None, "AVISO","Reserva cancelada com sucesso",)
+            else:
+                QtWidgets.QMessageBox.warning(None, "AVISO","Não há reservas para serem canceladas",)
+    
+    def gera_pdf(self):
+        string = 'solicita'+","+self.professor.getCpf()+","+self.professor.getEmail()
+        c1 = cliente(string)
+        
+        string2 = c1.client_socket.recv(1024).decode()
+        
+        
+        lista = string2.split(",")
+        print(lista)
+        if(lista[0]!="invalido"):
+            g = GeraPDF(self.professor,lista[0],lista[1])
+            g.cria()
+            envia = envia_email(self.professor)
+            envia.send_an_email()
+            QtWidgets.QMessageBox.information(None, "AVISO","Email enviado com sucesso",)
+            
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

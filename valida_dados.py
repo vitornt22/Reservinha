@@ -1,6 +1,6 @@
 import sqlite3
 from hashlib import md5
-
+from datetime import datetime
 def verifica_senha(senha):
     
     conexao = sqlite3.connect('bd0.db')
@@ -193,6 +193,26 @@ def verifica_dia(dia):
     else:
         return 0
 
+
+def verifica_hora():
+    today = datetime.now().hour
+    return today
+    
+def conta_reserva(cpf):
+    conexao = sqlite3.connect('bd0.db')
+    cont = 0
+    cursor = conexao.cursor()
+    cons = cursor.execute("SELECT * FROM Reservas WHERE Cpf = ?",(cpf,))
+    for i in cons.fetchall():
+        cont+=1
+    return cont
+
+
+
+
+
+
+    
 
 
 

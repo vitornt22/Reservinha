@@ -381,7 +381,7 @@ class Ui_MenuTecnico(object):
                 self.CampoCpf.clear()
                 self.CampoDisciplina.clear()
             else:
-                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2)
+                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2[:len(string2)-1:1])
         else:
             QtWidgets.QMessageBox.about(None, "Alguns Valores invalidos","Preencha os campos com valores validos",)
 

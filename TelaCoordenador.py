@@ -7,16 +7,19 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from cliente import cliente
 from verificaEmail import verificaEmail,verificaCpf,verificaTelefone,verificaMat
 from valida_dados import verifica_horario,verifica_dia
-
+from geradordepdf import GeraPDF
+from datetime import datetime
+from enviaemail import envia_email
 class Ui_MenuCoordenador(object):
     def setupUi(self, MenuCoordenador):
-        self.coordenador = None
-        self.r_message = False
         MenuCoordenador.setObjectName("MenuCoordenador")
         MenuCoordenador.setEnabled(True)
+        self.coordenador = None
+        self.r_message = False
         MenuCoordenador.resize(711, 488)
         MenuCoordenador.setAutoFillBackground(False)
         MenuCoordenador.setAnimated(True)
@@ -224,7 +227,7 @@ class Ui_MenuCoordenador(object):
         self.fundo_2.setScaledContents(True)
         self.fundo_2.setObjectName("fundo_2")
         self.tabela = QtWidgets.QTableWidget(self.ReservarSala)
-        self.tabela.setGeometry(QtCore.QRect(10, 140, 691, 241))
+        self.tabela.setGeometry(QtCore.QRect(10, 170, 691, 241))
         self.tabela.setObjectName("tabela")
         self.tabela.setColumnCount(6)
         self.tabela.setRowCount(7)
@@ -255,7 +258,7 @@ class Ui_MenuCoordenador(object):
         item = QtWidgets.QTableWidgetItem()
         self.tabela.setHorizontalHeaderItem(5, item)
         self.layoutWidget2 = QtWidgets.QWidget(self.ReservarSala)
-        self.layoutWidget2.setGeometry(QtCore.QRect(10, 10, 351, 121))
+        self.layoutWidget2.setGeometry(QtCore.QRect(10, 10, 351, 144))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget2)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -320,16 +323,16 @@ class Ui_MenuCoordenador(object):
         self.CampoHorario.setObjectName("CampoHorario")
         self.agrupamento10_2.addWidget(self.CampoHorario)
         self.verticalLayout.addLayout(self.agrupamento10_2)
-        self.widget = QtWidgets.QWidget(self.ReservarSala)
-        self.widget.setGeometry(QtCore.QRect(450, 0, 161, 121))
-        self.widget.setObjectName("widget")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget)
+        self.layoutWidget3 = QtWidgets.QWidget(self.ReservarSala)
+        self.layoutWidget3.setGeometry(QtCore.QRect(450, 0, 161, 121))
+        self.layoutWidget3.setObjectName("layoutWidget3")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.layoutWidget3)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.Listar = QtWidgets.QPushButton(self.widget)
+        self.Listar = QtWidgets.QPushButton(self.layoutWidget3)
         self.Listar.setObjectName("Listar")
         self.verticalLayout_2.addWidget(self.Listar)
-        self.Reservar = QtWidgets.QPushButton(self.widget)
+        self.Reservar = QtWidgets.QPushButton(self.layoutWidget3)
         self.Reservar.setObjectName("Reservar")
         self.verticalLayout_2.addWidget(self.Reservar)
         self.Tabelageral.addTab(self.ReservarSala, "")
@@ -372,7 +375,7 @@ class Ui_MenuCoordenador(object):
         self.fundo_4.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
         self.fundo_4.setObjectName("fundo_4")
         self.Remover = QtWidgets.QPushButton(self.cancelarreserva)
-        self.Remover.setGeometry(QtCore.QRect(280, 240, 121, 41))
+        self.Remover.setGeometry(QtCore.QRect(280, 270, 121, 41))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -436,36 +439,148 @@ class Ui_MenuCoordenador(object):
         self.CampoDia.setObjectName("CampoDia")
         self.subagrupamento3.addWidget(self.CampoDia)
         self.Agrupamento13.addLayout(self.subagrupamento3)
+        self.layoutWidget_9 = QtWidgets.QWidget(self.cancelarreserva)
+        self.layoutWidget_9.setGeometry(QtCore.QRect(170, 220, 321, 31))
+        self.layoutWidget_9.setObjectName("layoutWidget_9")
+        self.subagrupamento3_2 = QtWidgets.QHBoxLayout(self.layoutWidget_9)
+        self.subagrupamento3_2.setContentsMargins(0, 0, 0, 0)
+        self.subagrupamento3_2.setObjectName("subagrupamento3_2")
+        self.horario = QtWidgets.QLabel(self.layoutWidget_9)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.horario.setFont(font)
+        self.horario.setObjectName("horario")
+        self.subagrupamento3_2.addWidget(self.horario)
+        self.CampoHorario_2 = QtWidgets.QLineEdit(self.layoutWidget_9)
+        self.CampoHorario_2.setStyleSheet("QLineEdit{\n"
+"    background-color: white;\n"
+"}")
+        self.CampoHorario_2.setObjectName("CampoHorario_2")
+        self.subagrupamento3_2.addWidget(self.CampoHorario_2)
         self.Tabelageral.addTab(self.cancelarreserva, "")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.fundo_5 = QtWidgets.QLabel(self.tab)
+        self.Altrerardados = QtWidgets.QWidget()
+        self.Altrerardados.setObjectName("Altrerardados")
+        self.fundo_5 = QtWidgets.QLabel(self.Altrerardados)
         self.fundo_5.setGeometry(QtCore.QRect(-10, -10, 931, 401))
         self.fundo_5.setText("")
         self.fundo_5.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
         self.fundo_5.setObjectName("fundo_5")
-        self.SenhaBotao_2 = QtWidgets.QPushButton(self.tab)
+        self.SenhaBotao_2 = QtWidgets.QPushButton(self.Altrerardados)
         self.SenhaBotao_2.setGeometry(QtCore.QRect(260, 140, 171, 41))
         self.SenhaBotao_2.setObjectName("SenhaBotao_2")
-        self.SenhaBotao = QtWidgets.QPushButton(self.tab)
+        self.SenhaBotao = QtWidgets.QPushButton(self.Altrerardados)
         self.SenhaBotao.setGeometry(QtCore.QRect(260, 90, 171, 41))
         self.SenhaBotao.setObjectName("SenhaBotao")
-        self.SenhaBotao_3 = QtWidgets.QPushButton(self.tab)
+        self.SenhaBotao_3 = QtWidgets.QPushButton(self.Altrerardados)
         self.SenhaBotao_3.setGeometry(QtCore.QRect(260, 190, 171, 41))
         self.SenhaBotao_3.setObjectName("SenhaBotao_3")
-        self.Tabelageral.addTab(self.tab, "")
+        self.Tabelageral.addTab(self.Altrerardados, "")
+        self.Informacoes = QtWidgets.QWidget()
+        self.Informacoes.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.Informacoes.setAcceptDrops(False)
+        self.Informacoes.setAccessibleName("")
+        self.Informacoes.setAccessibleDescription("")
+        self.Informacoes.setObjectName("Informacoes")
+        self.fundo_6 = QtWidgets.QLabel(self.Informacoes)
+        self.fundo_6.setEnabled(True)
+        self.fundo_6.setGeometry(QtCore.QRect(-150, -10, 1071, 461))
+        self.fundo_6.setText("")
+        self.fundo_6.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
+        self.fundo_6.setObjectName("fundo_6")
+        self.layoutWidget_13 = QtWidgets.QWidget(self.Informacoes)
+        self.layoutWidget_13.setGeometry(QtCore.QRect(120, 190, 471, 36))
+        self.layoutWidget_13.setObjectName("layoutWidget_13")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.layoutWidget_13)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.email = QtWidgets.QLabel(self.layoutWidget_13)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.email.setFont(font)
+        self.email.setObjectName("email")
+        self.horizontalLayout_2.addWidget(self.email)
+        self.LabeEmail = QtWidgets.QLabel(self.layoutWidget_13)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabeEmail.setFont(font)
+        self.LabeEmail.setText("")
+        self.LabeEmail.setObjectName("LabeEmail")
+        self.horizontalLayout_2.addWidget(self.LabeEmail)
+        self.layoutWidget_11 = QtWidgets.QWidget(self.Informacoes)
+        self.layoutWidget_11.setGeometry(QtCore.QRect(120, 250, 471, 36))
+        self.layoutWidget_11.setObjectName("layoutWidget_11")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget_11)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.siape = QtWidgets.QLabel(self.layoutWidget_11)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.siape.setFont(font)
+        self.siape.setObjectName("siape")
+        self.horizontalLayout.addWidget(self.siape)
+        self.LabelSiape = QtWidgets.QLabel(self.layoutWidget_11)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelSiape.setFont(font)
+        self.LabelSiape.setText("")
+        self.LabelSiape.setObjectName("LabelSiape")
+        self.horizontalLayout.addWidget(self.LabelSiape)
+        self.layoutWidget_12 = QtWidgets.QWidget(self.Informacoes)
+        self.layoutWidget_12.setGeometry(QtCore.QRect(120, 90, 471, 36))
+        self.layoutWidget_12.setObjectName("layoutWidget_12")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.layoutWidget_12)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.nome = QtWidgets.QLabel(self.layoutWidget_12)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.nome.setFont(font)
+        self.nome.setObjectName("nome")
+        self.horizontalLayout_4.addWidget(self.nome)
+        self.LabelNome = QtWidgets.QLabel(self.layoutWidget_12)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelNome.setFont(font)
+        self.LabelNome.setText("")
+        self.LabelNome.setObjectName("LabelNome")
+        self.horizontalLayout_4.addWidget(self.LabelNome)
+        self.layoutWidget_10 = QtWidgets.QWidget(self.Informacoes)
+        self.layoutWidget_10.setGeometry(QtCore.QRect(120, 140, 471, 36))
+        self.layoutWidget_10.setObjectName("layoutWidget_10")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.layoutWidget_10)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.telefone = QtWidgets.QLabel(self.layoutWidget_10)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.telefone.setFont(font)
+        self.telefone.setObjectName("telefone")
+        self.horizontalLayout_3.addWidget(self.telefone)
+        self.LabelTelefone = QtWidgets.QLabel(self.layoutWidget_10)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelTelefone.setFont(font)
+        self.LabelTelefone.setText("")
+        self.LabelTelefone.setObjectName("LabelTelefone")
+        self.horizontalLayout_3.addWidget(self.LabelTelefone)
+        self.Tabelageral.addTab(self.Informacoes, "")
         MenuCoordenador.setCentralWidget(self.centralwidget)
         self.rodape = QtWidgets.QStatusBar(MenuCoordenador)
+        self.rodape.setSizeGripEnabled(True)
         self.rodape.setObjectName("rodape")
         MenuCoordenador.setStatusBar(self.rodape)
 
         self.retranslateUi(MenuCoordenador)
-        self.Tabelageral.setCurrentIndex(1)
+        self.Tabelageral.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(MenuCoordenador)
 
     def retranslateUi(self, MenuCoordenador):
         _translate = QtCore.QCoreApplication.translate
         MenuCoordenador.setWindowTitle(_translate("MenuCoordenador", "MENU COORDENADOR"))
+        self.Tabelageral.setToolTip(_translate("MenuCoordenador", "<html><head/><body><p>dff</p></body></html>"))
+        self.cadastrarprofessor.setWhatsThis(_translate("MenuCoordenador", "<html><head/><body><p>h</p></body></html>"))
         self.Cpf.setText(_translate("MenuCoordenador", "CPF               "))
         self.Email.setText(_translate("MenuCoordenador", "EMAIL          "))
         self.Siape.setText(_translate("MenuCoordenador", "SIAPE           "))
@@ -513,36 +628,48 @@ class Ui_MenuCoordenador(object):
         self.GerarPDF.setText(_translate("MenuCoordenador", "GERAR PDF"))
         self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.Verreservas), _translate("MenuCoordenador", "Ver reservas"))
         self.Remover.setText(_translate("MenuCoordenador", "REMOVER"))
-        self.Bloco_2.setText(_translate("MenuCoordenador", "BLOCO"))
-        self.Sala_2.setText(_translate("MenuCoordenador", "SALA    "))
-        self.Dia_2.setText(_translate("MenuCoordenador", "DIA      "))
+        self.Bloco_2.setText(_translate("MenuCoordenador", "BLOCO     "))
+        self.Sala_2.setText(_translate("MenuCoordenador", "SALA         "))
+        self.Dia_2.setText(_translate("MenuCoordenador", "DIA           "))
+        self.horario.setText(_translate("MenuCoordenador", "HORARIO"))
         self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.cancelarreserva), _translate("MenuCoordenador", "Cancelar reserva"))
         self.SenhaBotao_2.setText(_translate("MenuCoordenador", "EMAIL"))
         self.SenhaBotao.setText(_translate("MenuCoordenador", "SENHA"))
         self.SenhaBotao_3.setText(_translate("MenuCoordenador", "TELEFONE"))
-        self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.tab), _translate("MenuCoordenador", "Alterar Dados"))
+        self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.Altrerardados), _translate("MenuCoordenador", "Alterar Dados"))
+        self.Informacoes.setToolTip(_translate("MenuCoordenador", "<html><head/><body><p><br/></p></body></html>"))
+        self.Informacoes.setWhatsThis(_translate("MenuCoordenador", "<html><head/><body><p>kkkkkkkkkkkkkkkkkk</p></body></html>"))
+        self.email.setText(_translate("MenuCoordenador", "EMAIL"))
+        self.siape.setText(_translate("MenuCoordenador", "SIAPE"))
+        self.nome.setText(_translate("MenuCoordenador", "NOME"))
+        self.telefone.setText(_translate("MenuCoordenador", "TELEFONE:"))
+        self.Tabelageral.setTabText(self.Tabelageral.indexOf(self.Informacoes), _translate("MenuCoordenador", "Informações"))
         self.funcionalidade()
+
+        
     def mostrar(self):
-        print("Nome",self.coordenador.getNome())
+        self.LabelNome.setText(self.coordenador.getNome())
+        self.LabelTelefone.setText(self.coordenador.getTelefone())
+        self.LabeEmail.setText(self.coordenador.getEmail())
+        self.LabelSiape.setText(str(self.coordenador.getSIAPE()))
+        
+        """print("Nome",self.coordenador.getNome())
         print("Siape",self.coordenador.getSIAPE())
         print("Cpf",self.coordenador.getCpf())
         print("Senha",self.coordenador.getSenha())
         print("Email:",self.coordenador.getEmail())
         print("Telefone",self.coordenador.getTelefone())
-        print("Disciplina",self.coordenador.getCurso())
-        #self.CampoSala_2.setText("Testando")#Esse lixo pertence ao cancelar
-        #self.CampoDia.setText("lixo")#Esse tambem
-        #self.CampoBloco_2.setText("teste") esse tambem
+        print("Disciplina",self.coordenador.getCurso())"""
+       
         
     def funcionalidade(self):
         self.Cadastrar.clicked.connect(self.cadastrar)
-        self.cancelar.clicked.connect(self.Cancelar)
-        self.SenhaBotao_2.clicked.connect(self.print)
+        self.Remover.clicked.connect(self.cancelar_reserva)
         self.Listar.clicked.connect(self.listar_salas)
         self.Reservar.clicked.connect(self.reservar)
         self.Mostrar.clicked.connect(self.mostrar_reservas)
-    def print(self):
-        print("Vitor é burro")
+        self.GerarPDF.clicked.connect(self.gera_pdf)
+    
         
     def cadastrar(self):
         nome=self.CampoNome.text()
@@ -568,12 +695,11 @@ class Ui_MenuCoordenador(object):
                 self.CampoCpf.clear()
                 self.CampoDisciplina.clear()
             else:
-                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2)
+                QtWidgets.QMessageBox.about(None, "AVISO","Os seguintos dados já estão cadastrados:\n"+string2[:len(string2)-1:1])
         else:
             QtWidgets.QMessageBox.about(None, "Alguns Valores invalidos","Preencha os campos com valores validos",)
 
-    def Cancelar(self):
-        pass
+    
     
     def loga_coordenador(self,coordenador):
         self.coordenador = coordenador
@@ -584,10 +710,7 @@ class Ui_MenuCoordenador(object):
 
 
     def listar_salas(self):
-        #self.CampoDIa.setText("vitor burro") campo do dia
-        #self.CampoBloco.setText("lixo") bloco
-        #self.CampoSala.setText("819") sala
-        #self.CampoHorario.setText("2") horario
+       
         string = ''
         erros = ''
         if((len(self.CampoBloco.text())==0) or (len(self.CampoSala.text())==0)):
@@ -650,8 +773,39 @@ class Ui_MenuCoordenador(object):
         else:
             QtWidgets.QMessageBox.information(None, "AVISO","Não há reservas realizadas no momento",) 
     
-                    
+    def cancelar_reserva(self):
+        bloco = self.CampoBloco_2.text()
+        sala = self.CampoSala_2.text()
+        dia = self.CampoDia.text()
+        horario = self.CampoHorario_2.text()
+        string = ''
+        if(len(dia)== 0 or len(sala) == 0 or len(bloco)==0 or len(horario)==0):
+            QtWidgets.QMessageBox.information(None, "AVISO","PREENCHA TODOS OS CAMPOS!",)
+        else:
+            string = "cancelar_reserva"+","+self.coordenador.getCpf()+","+bloco+","+sala+","+dia+","+horario
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+           
+            if(string2=="cancelar"):
+                QtWidgets.QMessageBox.information(None, "AVISO","Reserva cancelada com sucesso",)
+            else:
+                QtWidgets.QMessageBox.warning(None, "AVISO","Não há reservas para serem canceladas",)
+
+    def gera_pdf(self):
+        string = 'solicita'+","+self.coordenador.getCpf()+","+self.coordenador.getEmail()
+        c1 = cliente(string)
         
+        string2 = c1.client_socket.recv(1024).decode()
+        
+        
+        lista = string2.split(",")
+        print(lista)
+        if(lista[0]!="invalido"):
+            g = GeraPDF(self.coordenador,lista[0],lista[1])
+            g.cria()
+            envia = envia_email(self.coordenador)
+            envia.send_an_email()
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

@@ -40,7 +40,7 @@ class Ui_inicio(object):
         self.fundoazul.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
         self.fundoazul.setObjectName("fundoazul")
         self.titulo = QtWidgets.QLabel(self.centralwidget)
-        self.titulo.setGeometry(QtCore.QRect(240, 40, 121, 31))
+        self.titulo.setGeometry(QtCore.QRect(180, 40, 301, 31))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(True)
@@ -79,7 +79,7 @@ class Ui_inicio(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.titulo.setText(_translate("MainWindow", "Entrar como"))
+        self.titulo.setText(_translate("MainWindow", "BEM-VINDO AO RESERVINHA"))
         self.Botaoprofessor.setText(_translate("MainWindow", "Professor"))
         self.BotaoMonitor.setText(_translate("MainWindow", "Monitor"))
         self.Botaocoordenador.setText(_translate("MainWindow", "Coordenador"))
