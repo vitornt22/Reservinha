@@ -445,6 +445,7 @@ class Ui_MenuMonitor(object):
         self.Reservar.clicked.connect(self.reservar)
         self.Mostrar.clicked.connect(self.mostrar_reservas)
         self.gerarPDF.clicked.connect(self.gera_pdf)
+        self.Remover.clicked.connect(self.cancelar_reserva)
     def mostrar(self):
         self.LabelNome.setText(self.monitor.getNome())
         self.LabelTelefone.setText(self.monitor.getTelefone())
@@ -546,6 +547,28 @@ class Ui_MenuMonitor(object):
             envia.send_an_email()
             QtWidgets.QMessageBox.information(None, "AVISO","Email enviado com sucesso",)
 
+    def cancelar_reserva(self):
+        bloco = self.CampoBloco_4.text()
+        sala = self.CampoSala_3.text()
+        dia = self.CampoDia_2.text()
+        horario = self.CampoHorario_2.text()
+        string = ''
+        if(len(dia)== 0 or len(sala) == 0 or len(bloco)==0 or len(horario)==0):
+            QtWidgets.QMessageBox.information(None, "AVISO","PREENCHA TODOS OS CAMPOS!",)
+        else:
+            string = "cancelar_reserva"+","+self.monitor.getCpf()+","+bloco+","+sala+","+dia+","+horario
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+            if(string2=="cancelar"):
+                QtWidgets.QMessageBox.information(None, "AVISO","Reserva cancelada com sucesso",)
+                self.CampoBloco_4.clear()
+                self.CampoSala_3.clear()
+                self.CampoDia_2.clear()
+                self.CampoHorario_2.clear()
+
+            else:
+                QtWidgets.QMessageBox.warning(None, "AVISO","Não há reservas para serem canceladas",)
+    
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

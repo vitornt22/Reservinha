@@ -230,13 +230,13 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     self.coord.setCurso(lista[6])
                     self.coord.setEmail(lista[4])
                     self.coord.setSenha(lista[3])
-                    print("Nome",self.coord.getNome())
+                    """print("Nome",self.coord.getNome())
                     print("Siape",self.coord.getSIAPE())
                     print("Cpf",self.coord.getCpf())
                     print("Senha",self.coord.getSenha())
                     print("Email:",self.coord.getEmail())
                     print("Telefone",self.coord.getTelefone())
-                    print("Disciplina",self.coord.getCurso())
+                    print("Disciplina",self.coord.getCurso())"""
                     
                     self.tela_coordenador.loga_coordenador(self.coord)
                     self.tela_alterar_email.getPessoa(self.coord)
@@ -267,13 +267,13 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     self.prof.setDisciplina(lista[6])
                     self.prof.setEmail(lista[4])
                     self.prof.setSenha(lista[3])
-                    print("Nome",self.prof.getNome())
+                    """print("Nome",self.prof.getNome())
                     print("Siape",self.prof.getSIAPE())
                     print("Cpf",self.prof.getCpf())
                     print("Senha",self.prof.getSenha())
                     print("Email:",self.prof.getEmail())
                     print("Telefone",self.prof.getTelefone())
-                    print("Disciplina",self.prof.getDisciplina())
+                    print("Disciplina",self.prof.getDisciplina())"""
 
                     self.tela_professor.loga_professor(self.prof)
                     
@@ -309,13 +309,13 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     self.monit.setDisciplina(lista[6])
                     self.monit.setEmail(lista[4])
                     self.monit.setSenha(lista[3])
-                    print("Nome",self.monit.getNome())
+                    """print("Nome",self.monit.getNome())
                     print("Matricula",self.monit.getMatricula())
                     print("Cpf",self.monit.getCpf())
                     print("Senha",self.monit.getSenha())
                     print("Email:",self.monit.getEmail())
                     print("Telefone",self.monit.getTelefone())
-                    print("Disciplina",self.monit.getDisciplina())
+                    print("Disciplina",self.monit.getDisciplina())"""
 
                     self.tela_alterar_email.getPessoa(self.monit)
                     self.tela_alterar_telefone.getPessoa(self.monit)
@@ -346,11 +346,11 @@ class Main(QtWidgets.QMainWindow,Ui_Main):
                     self.tec.setNome(lista[0])
                     self.tec.setEmail(lista[2])
                     self.tec.setSenha(lista[4])
-                    print("Nome",self.tec.getNome())
+                    """print("Nome",self.tec.getNome())
                     print("Cpf",self.tec.getCpf())
                     print("Senha",self.tec.getSenha())
                     print("Email:",self.tec.getEmail())
-                    print("Telefone",self.tec.getTelefone())
+                    print("Telefone",self.tec.getTelefone())"""
                     self.tela_tecnico.loga_tecnico(self.tec)
 
                     self.tela_alterar_email.getPessoa(self.tec)

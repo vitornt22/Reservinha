@@ -771,6 +771,11 @@ class Ui_MenuProfessor(object):
             string2 = c1.client_socket.recv(1024).decode()
             if(string2=="cancelar"):
                 QtWidgets.QMessageBox.information(None, "AVISO","Reserva cancelada com sucesso",)
+                self.CampoBloco_2.clear()
+                self.CampoSala_2.clear()
+                self.CampoDia.clear()
+                self.CampoHorario_2.clear()
+
             else:
                 QtWidgets.QMessageBox.warning(None, "AVISO","Não há reservas para serem canceladas",)
     

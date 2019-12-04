@@ -27,12 +27,80 @@ class ClientThread(threading.Thread):
             data = 0
         string = recebe.decode()
         lista = string.split(',')
+        if(lista[0]=="cancelar_reserva_tec"):
+            print("aqui")
+            
+            cursor.execute("DELETE from Reservas WHERE (Sala = ? AND Dia = ? And Horario = ?)",(lista[2],lista[3],lista[4]))
+            conexao.commit()
+            cursor.execute("UPDATE Salas set Situacao = ? WHERE (Numero = ? AND Dia = ? AND Horario = ?)",("Livre",lista[2],lista[3],lista[4]))
+            conexao.commit()
+            self.csocket.send("cancelar".encode())
+
+
+        if(lista[0]=="cad_sala"):
+            cont = 0
+            print(lista)
+            cons = cursor.execute("SELECT * from Salas WHERE (Bloco = ? AND Numero = ?)",(lista[1],lista[2]))
+            for i in cons.fetchall():
+                cont+=1
+            if(cont!=0):
+                self.csocket.send("existe".encode())
+            else:
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"8","Livre","Segunda",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"10","Livre","Segunda",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"12","Livre","Segunda",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"14","Livre","Segunda",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"16","Livre","Segunda",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"18","Livre","Segunda",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"20","Livre","Segunda",lista[1]))
+
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"8","Livre","Terca",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"10","Livre","Terca",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"12","Livre","Terca",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"14","Livre","Terca",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"16","Livre","Terca",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"18","Livre","Terca",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"20","Livre","Terca",lista[1]))
+
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"8","Livre","Quarta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"10","Livre","Quarta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"12","Livre","Quarta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"14","Livre","Quarta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"16","Livre","Quarta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"18","Livre","Quarta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"20","Livre","Quarta",lista[1]))
+
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"8","Livre","Quinta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"10","Livre","Quinta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"12","Livre","Quinta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"14","Livre","Quinta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"16","Livre","Quinta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"18","Livre","Quinta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"20","Livre","Quinta",lista[1]))
+
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"8","Livre","Sexta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"10","Livre","Sexta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"12","Livre","Sexta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"14","Livre","Sexta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"16","Livre","Sexta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"18","Livre","Sexta",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"20","Livre","Sexta",lista[1]))
+
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"8","Livre","Sabado",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"10","Livre","Sabado",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"12","Livre","Sabado",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"14","Livre","Sabado",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"16","Livre","Sabado",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"18","Livre","Sabado",lista[1]))
+                cursor.execute("INSERT INTO Salas  VALUES (?,?,?,?,?)",(lista[2],"20","Livre","Sabado",lista[1]))
+                conexao.commit()
+                self.csocket.send("cadastrou".encode())
+
+                
         if(lista[0]=="solicita"):
             cont = 0
             sala = ''
-            print(str(hora))
-            print(data)
-            print(dias[data])
+            
             cons = cursor.execute("SELECT * from Reservas WHERE (Cpf= ? AND Dia = ? and Horario <= ?)",(lista[1],dias[data],str(hora)))
             for i in cons.fetchall():
                 cont+=1
@@ -43,7 +111,6 @@ class ClientThread(threading.Thread):
             else:
                 self.csocket.send(sala.encode())
         if(lista[0]=="cancelar_reserva"):
-            if((int(lista[5])+2 <= hora)):
                 cont = conta_reserva(lista[1])
                 if(conta_reserva(lista[1])==0):
                     self.csocket.send("sem".encode())
@@ -60,8 +127,7 @@ class ClientThread(threading.Thread):
                         cursor.execute("UPDATE Salas set Situacao = ? WHERE (Numero = ? AND Dia = ? AND Horario = ?)",("Livre",lista[3],lista[4],lista[5]))
                         conexao.commit()
                         self.csocket.send("cancelar".encode())
-            
-            
+           
         if(lista[0]=="mostrar"):
             cont = 0
             string = ''
@@ -69,7 +135,7 @@ class ClientThread(threading.Thread):
             for i in cons.fetchall():
                 cont+=1
                 string+=str(i[0])+","+str(i[1]) +" as "+ str(int(i[1])+2)+","+str(i[3])+","
-            print("\n string",string)
+           
             if(cont==0):
                 self.csocket.send("vazio".encode())
             else:
@@ -82,10 +148,10 @@ class ClientThread(threading.Thread):
             cont = 0
             cons = cursor.execute("SELECT Numero,Situacao from Salas WHERE (Bloco = ? and Numero = ? AND Situacao = ? AND Dia = ? AND Horario=?)",(lista[2],lista[3],"Livre",lista[4],lista[5]))
             for i in cons.fetchall():
-                print("a", i)
+                
                 cont+=1
 
-            print("O cont",cont)
+            
 
             if(cont==0):
                 self.csocket.send("ocupado".encode())

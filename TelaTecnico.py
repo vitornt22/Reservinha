@@ -7,14 +7,16 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 from verificaEmail import verificaEmail, verificaCpf, verificaTelefone, verificaMat
 from cliente import cliente
+
 class Ui_MenuTecnico(object):
     def setupUi(self, MainWindow):
-        self.tecnico = None
-        self.r_message = False
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(711, 429)
+        MainWindow.resize(642, 502)
+        self.r_message = False
+        self.tecnico = None
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.fundo = QtWidgets.QLabel(self.centralwidget)
@@ -29,7 +31,6 @@ class Ui_MenuTecnico(object):
         font.setBold(True)
         font.setWeight(75)
         self.TabelGeral.setFont(font)
-        
         self.TabelGeral.setStyleSheet("QWidget{\n"
 "    color: rgb(3, 0, 117)\n"
 "}")
@@ -217,13 +218,21 @@ class Ui_MenuTecnico(object):
         self.listagem.setGeometry(QtCore.QRect(50, 30, 601, 281))
         self.listagem.setObjectName("listagem")
         self.mostrar = QtWidgets.QPushButton(self.reservas_2)
-        self.mostrar.setGeometry(QtCore.QRect(300, 320, 81, 31))
+        self.mostrar.setGeometry(QtCore.QRect(240, 320, 81, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.mostrar.setFont(font)
         self.mostrar.setObjectName("mostrar")
+        self.GerarPDF = QtWidgets.QPushButton(self.reservas_2)
+        self.GerarPDF.setGeometry(QtCore.QRect(350, 320, 81, 31))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.GerarPDF.setFont(font)
+        self.GerarPDF.setObjectName("GerarPDF")
         self.TabelGeral.addTab(self.reservas_2, "")
         self.CancelarReserva = QtWidgets.QWidget()
         self.CancelarReserva.setObjectName("CancelarReserva")
@@ -297,6 +306,26 @@ class Ui_MenuTecnico(object):
         font.setWeight(75)
         self.remover.setFont(font)
         self.remover.setObjectName("remover")
+        self.layoutWidget_13 = QtWidgets.QWidget(self.CancelarReserva)
+        self.layoutWidget_13.setGeometry(QtCore.QRect(150, 60, 331, 31))
+        self.layoutWidget_13.setObjectName("layoutWidget_13")
+        self.subagrupamento4_2 = QtWidgets.QHBoxLayout(self.layoutWidget_13)
+        self.subagrupamento4_2.setContentsMargins(0, 0, 0, 0)
+        self.subagrupamento4_2.setObjectName("subagrupamento4_2")
+        self.SIAPE_2 = QtWidgets.QLabel(self.layoutWidget_13)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.SIAPE_2.setFont(font)
+        self.SIAPE_2.setObjectName("SIAPE_2")
+        self.subagrupamento4_2.addWidget(self.SIAPE_2)
+        self.CampoSIAPE_2 = QtWidgets.QLineEdit(self.layoutWidget_13)
+        self.CampoSIAPE_2.setStyleSheet("QLineEdit{\n"
+"    background-color: white;\n"
+"}")
+        self.CampoSIAPE_2.setObjectName("CampoSIAPE_2")
+        self.subagrupamento4_2.addWidget(self.CampoSIAPE_2)
         self.TabelGeral.addTab(self.CancelarReserva, "")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -315,13 +344,138 @@ class Ui_MenuTecnico(object):
         self.SenhaBotao.setGeometry(QtCore.QRect(260, 90, 171, 41))
         self.SenhaBotao.setObjectName("SenhaBotao")
         self.TabelGeral.addTab(self.tab, "")
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.fundo_7 = QtWidgets.QLabel(self.tab_2)
+        self.fundo_7.setGeometry(QtCore.QRect(-100, -20, 791, 531))
+        self.fundo_7.setText("")
+        self.fundo_7.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
+        self.fundo_7.setObjectName("fundo_7")
+        self.layoutWidget_10 = QtWidgets.QWidget(self.tab_2)
+        self.layoutWidget_10.setGeometry(QtCore.QRect(110, 130, 391, 31))
+        self.layoutWidget_10.setObjectName("layoutWidget_10")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget_10)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.bloco_2 = QtWidgets.QLabel(self.layoutWidget_10)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.bloco_2.setFont(font)
+        self.bloco_2.setObjectName("bloco_2")
+        self.horizontalLayout.addWidget(self.bloco_2)
+        self.CampoBloco_2 = QtWidgets.QLineEdit(self.layoutWidget_10)
+        self.CampoBloco_2.setObjectName("CampoBloco_2")
+        self.horizontalLayout.addWidget(self.CampoBloco_2)
+        self.cadastrar_2 = QtWidgets.QPushButton(self.tab_2)
+        self.cadastrar_2.setGeometry(QtCore.QRect(250, 230, 87, 29))
+        self.cadastrar_2.setObjectName("cadastrar_2")
+        self.layoutWidget_11 = QtWidgets.QWidget(self.tab_2)
+        self.layoutWidget_11.setGeometry(QtCore.QRect(110, 170, 391, 31))
+        self.layoutWidget_11.setObjectName("layoutWidget_11")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.layoutWidget_11)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.sala = QtWidgets.QLabel(self.layoutWidget_11)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.sala.setFont(font)
+        self.sala.setObjectName("sala")
+        self.horizontalLayout_2.addWidget(self.sala)
+        self.CampoSala_2 = QtWidgets.QLineEdit(self.layoutWidget_11)
+        self.CampoSala_2.setObjectName("CampoSala_2")
+        self.horizontalLayout_2.addWidget(self.CampoSala_2)
+        self.TabelGeral.addTab(self.tab_2, "")
+        self.tab_3 = QtWidgets.QWidget()
+        self.tab_3.setObjectName("tab_3")
+        self.fundo_8 = QtWidgets.QLabel(self.tab_3)
+        self.fundo_8.setGeometry(QtCore.QRect(-130, -60, 791, 531))
+        self.fundo_8.setText("")
+        self.fundo_8.setPixmap(QtGui.QPixmap("../fundo azul.jpg"))
+        self.fundo_8.setObjectName("fundo_8")
+        self.layoutWidget_12 = QtWidgets.QWidget(self.tab_3)
+        self.layoutWidget_12.setGeometry(QtCore.QRect(120, 200, 461, 36))
+        self.layoutWidget_12.setObjectName("layoutWidget_12")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.layoutWidget_12)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.Siape_2 = QtWidgets.QLabel(self.layoutWidget_12)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.Siape_2.setFont(font)
+        self.Siape_2.setObjectName("Siape_2")
+        self.horizontalLayout_4.addWidget(self.Siape_2)
+        self.LabelSiape = QtWidgets.QLabel(self.layoutWidget_12)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelSiape.setFont(font)
+        self.LabelSiape.setText("")
+        self.LabelSiape.setObjectName("LabelSiape")
+        self.horizontalLayout_4.addWidget(self.LabelSiape)
+        self.layoutWidget_14 = QtWidgets.QWidget(self.tab_3)
+        self.layoutWidget_14.setGeometry(QtCore.QRect(120, 120, 461, 36))
+        self.layoutWidget_14.setObjectName("layoutWidget_14")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.layoutWidget_14)
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.nome = QtWidgets.QLabel(self.layoutWidget_14)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.nome.setFont(font)
+        self.nome.setObjectName("nome")
+        self.horizontalLayout_5.addWidget(self.nome)
+        self.LabelNome = QtWidgets.QLabel(self.layoutWidget_14)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelNome.setFont(font)
+        self.LabelNome.setText("")
+        self.LabelNome.setObjectName("LabelNome")
+        self.horizontalLayout_5.addWidget(self.LabelNome)
+        self.layoutWidget_15 = QtWidgets.QWidget(self.tab_3)
+        self.layoutWidget_15.setGeometry(QtCore.QRect(120, 160, 461, 36))
+        self.layoutWidget_15.setObjectName("layoutWidget_15")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.layoutWidget_15)
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.email_2 = QtWidgets.QLabel(self.layoutWidget_15)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.email_2.setFont(font)
+        self.email_2.setObjectName("email_2")
+        self.horizontalLayout_6.addWidget(self.email_2)
+        self.LabeEmail = QtWidgets.QLabel(self.layoutWidget_15)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabeEmail.setFont(font)
+        self.LabeEmail.setText("")
+        self.LabeEmail.setObjectName("LabeEmail")
+        self.horizontalLayout_6.addWidget(self.LabeEmail)
+        self.layoutWidget1 = QtWidgets.QWidget(self.tab_3)
+        self.layoutWidget1.setGeometry(QtCore.QRect(120, 80, 461, 36))
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.layoutWidget1)
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.Telefone_2 = QtWidgets.QLabel(self.layoutWidget1)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.Telefone_2.setFont(font)
+        self.Telefone_2.setObjectName("Telefone_2")
+        self.horizontalLayout_7.addWidget(self.Telefone_2)
+        self.LabelTelefone = QtWidgets.QLabel(self.layoutWidget1)
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        self.LabelTelefone.setFont(font)
+        self.LabelTelefone.setText("")
+        self.LabelTelefone.setObjectName("LabelTelefone")
+        self.horizontalLayout_7.addWidget(self.LabelTelefone)
+        self.TabelGeral.addTab(self.tab_3, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.TabelGeral.setCurrentIndex(3)
+        self.TabelGeral.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -338,23 +492,36 @@ class Ui_MenuTecnico(object):
         self.cancelar.setText(_translate("MainWindow", "CANCELAR"))
         self.TabelGeral.setTabText(self.TabelGeral.indexOf(self.CadastrarCoordenador), _translate("MainWindow", "Cadastrar Coordenador"))
         self.mostrar.setText(_translate("MainWindow", "MOSTRAR"))
+        self.GerarPDF.setText(_translate("MainWindow", "Gerar  PDF"))
         self.TabelGeral.setTabText(self.TabelGeral.indexOf(self.reservas_2), _translate("MainWindow", "Ver reservas"))
         self.bloco.setText(_translate("MainWindow", "BLOCO"))
         self.Sala.setText(_translate("MainWindow", "SALA    "))
         self.Dia.setText(_translate("MainWindow", "DIA      "))
         self.remover.setText(_translate("MainWindow", "REMOVER"))
+        self.SIAPE_2.setText(_translate("MainWindow", "HORARIO  "))
         self.TabelGeral.setTabText(self.TabelGeral.indexOf(self.CancelarReserva), _translate("MainWindow", "Cancelar reserva"))
         self.SenhaBotao_2.setText(_translate("MainWindow", "EMAIL"))
         self.SenhaBotao_3.setText(_translate("MainWindow", "TELEFONE"))
         self.SenhaBotao.setText(_translate("MainWindow", "SENHA"))
         self.TabelGeral.setTabText(self.TabelGeral.indexOf(self.tab), _translate("MainWindow", "Alterar Dados"))
+        self.bloco_2.setText(_translate("MainWindow", "BLOCO"))
+        self.cadastrar_2.setText(_translate("MainWindow", "Cadastrar"))
+        self.sala.setText(_translate("MainWindow", "SALA    "))
+        self.TabelGeral.setTabText(self.TabelGeral.indexOf(self.tab_2), _translate("MainWindow", "Cadastrar Bloco"))
+        self.Siape_2.setText(_translate("MainWindow", "SIAPE"))
+        self.nome.setText(_translate("MainWindow", "NOME"))
+        self.email_2.setText(_translate("MainWindow", "EMAIL"))
+        self.Telefone_2.setText(_translate("MainWindow", "TELEFONE:"))
+        self.TabelGeral.setTabText(self.TabelGeral.indexOf(self.tab_3), _translate("MainWindow", "Informações"))
+
+
         self.funcionalidade()
 
 
     def funcionalidade(self):
         self.cadastrar.clicked.connect(self.cadastra)
-       
-    
+        self.cadastrar_2.clicked.connect(self.cadastra_sala)
+        self.remover.clicked.connect(self.cancela_reserva_tec)
     def cadastra(self):
         nome=self.CampoNome.text()
         siape= self.CampoSiape.text()
@@ -398,7 +565,51 @@ class Ui_MenuTecnico(object):
             self.r_message = True
         self.mostrar1()
 
+    def cadastra_sala(self):
+        #self.CampoBloco_2.setText("teste")
+        #self.CampoSala_2.setText("ok")
+        string = ''
+        if(len(self.CampoBloco_2.text())==0 or len(self.CampoSala_2.text())==0):
+            QtWidgets.QMessageBox.warning(None, "AVISO","PREENCHA TODOS OS CAMPOS!")
+            
+        else:
+            string = "cad_sala"+","+self.CampoBloco_2.text()+","+self.CampoSala_2.text()
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+            if(string2=="cadastrou"):
+                 QtWidgets.QMessageBox.information(None, "AVISO","cadastro de Sala feito com sucesso")
+                 self.CampoSala_2.clear()
+                 self.CampoBloco_2.clear()
+                 
+            else:
+                QtWidgets.QMessageBox.warning(None, "AVISO","Não foi possivel realizar cadastro")
 
+    def cancela_reserva_tec(self):
+        bloco = self.CampoBloco.text()
+        sala = self.CampoSala.text()
+        dia = self.CampoDIa.text()
+        horario = self.CampoSIAPE_2.text()
+        string = ''
+       
+    
+        if(len(dia)== 0 or len(sala) == 0 or len(bloco)==0 or len(horario)==0):
+            QtWidgets.QMessageBox.information(None, "AVISO","PREENCHA TODOS OS CAMPOS!",)
+        else:
+            string = "cancelar_reserva_tec"+","+bloco+","+sala+","+dia+","+horario
+            c1 = cliente(string)
+            string2 = c1.client_socket.recv(1024).decode()
+           
+            if(string2=="cancelar"):
+                QtWidgets.QMessageBox.information(None, "AVISO","Reserva cancelada com sucesso",)
+                bloco = self.CampoBloco.clear()
+                sala = self.CampoSala.clear()
+                dia = self.CampoDIa.clear()
+                horario = self.CampoSIAPE_2.clear()
+            else:
+                QtWidgets.QMessageBox.warning(None, "AVISO","Não há reservas para serem canceladas",)
+    
+
+                 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
